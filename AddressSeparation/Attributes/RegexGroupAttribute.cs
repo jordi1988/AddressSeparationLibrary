@@ -1,8 +1,14 @@
-﻿using System;
+﻿using AddressSeparation.Manipulations;
+using AddressSeparation.Options;
+using System;
 
 namespace AddressSeparation.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    /// <summary>
+    /// Attribute for setting up the RegexGroup on a property.
+    /// Use multiple attributes on a single property to match the first one with a value.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public sealed class RegexGroupAttribute : Attribute
     {
         #region Properties
@@ -28,7 +34,8 @@ namespace AddressSeparation.Attributes
         /// Binds the RegEx group to the address property.
         /// </summary>
         /// <param name="groupIndex">Index of the matching group RegEx in <see cref="IProcessOptions">IProcessOptions</see>.</param>
-        /// <remarks>First RegEx group starts at 1.</remarks>
+        /// <param name="outputManipulationType">type of the class implementing <see cref="IOutputManipulation{TInOut}"/> to invoke if group is found.</param>
+        /// <remarks>Group 0 matches whole expression. First RegEx group starts at 1.</remarks>
         public RegexGroupAttribute(int groupIndex, Type outputManipulationType)
         {
             this.GroupIndex = groupIndex;

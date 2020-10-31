@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AddressSeparation.OutputFormats
 {
@@ -6,6 +7,7 @@ namespace AddressSeparation.OutputFormats
     /// Output class of a proccessed address combining the resolved address and the final state.
     /// </summary>
     /// <typeparam name="TOutputFormat"></typeparam>
+    [DebuggerDisplay("{RawAddress}: {AddressHasBeenResolved}")]
     public class OutputResult<TOutputFormat> where TOutputFormat : class, new()
     {
         #region Properties

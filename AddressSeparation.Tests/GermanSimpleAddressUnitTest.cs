@@ -20,30 +20,25 @@ namespace AddressSeparation.Tests
             new object[] { "Berliner Straße", "Berliner Straße", null, "" },
 
             // Normal ones
-            //new object[] { "Vattmannstr.", "Vattmannstr.", null, "" },
-            //new object[] { "Vattmannstr. 11", "Vattmannstr.", (short)11, "" },
-            //new object[] { "Vattmannstr. 11a", "Vattmannstr.", (short)11, "A" },
-            //new object[] { "Vattmannstr. 11 A", "Vattmannstr.", (short)11, "A" },
+            new object[] { "Vattmannstr. 11", "Vattmannstr. ", (short)11, "" },
+            new object[] { "Vattmannstraße 11", "Vattmannstraße ", (short)11, "" },
+            new object[] { "Berliner Strasse 11", "Berliner Strasse ", (short)11, "" },
+            new object[] { "Berliner-Strasse 11", "Berliner-Strasse ", (short)11, "" },
 
-            //new object[] { "Vattmannstraße", "Vattmannstraße", null, "" },
-            //new object[] { "Vattmannstraße 11", "Vattmannstraße", (short)11, "" },
-            //new object[] { "Vattmannstraße 11a", "Vattmannstraße", (short)11, "A" },
-            //new object[] { "Vattmannstraße 11 A", "Vattmannstraße", (short)11, "A" },
-
-            //new object[] { "Berliner Strasse", "Berliner Strasse", null, "" },
-            //new object[] { "Berliner Strasse 11", "Berliner Strasse", (short)11, "" },
-            //new object[] { "Berliner Strasse 11a", "Berliner Strasse", (short)11, "A" },
-            //new object[] { "Berliner Strasse 11 A", "Berliner Strasse", (short)11, "A" },
-
-            //new object[] { "Berliner-Strasse", "Berliner-Strasse", null, "" },
-            //new object[] { "Berliner-Strasse 11", "Berliner-Strasse", (short)11, "" },
-            //new object[] { "Berliner-Strasse 11a", "Berliner-Strasse", (short)11, "A" },
-            //new object[] { "Berliner-Strasse 11 A", "Berliner-Strasse", (short)11, "A" },
+            // With affix
+            new object[] { "Vattmannstr. 11a", "Vattmannstr. ", (short)11, "A" },
+            new object[] { "Vattmannstr. 11 A", "Vattmannstr. ", (short)11, "A" },
+            new object[] { "Vattmannstraße 11a", "Vattmannstraße ", (short)11, "A" },
+            new object[] { "Vattmannstraße 11 A", "Vattmannstraße ", (short)11, "A" },
+            new object[] { "Berliner Strasse 11a", "Berliner Strasse ", (short)11, "A" },
+            new object[] { "Berliner Strasse 11 A", "Berliner Strasse ", (short)11, "A" },
+            new object[] { "Berliner-Strasse 11a", "Berliner-Strasse ", (short)11, "A" },
+            new object[] { "Berliner-Strasse 11 A", "Berliner-Strasse ", (short)11, "A" },
 
             // With errors
-            //new object[] { "Vattmannstr.11a", "Vattmannstr.", (short)11, "A" },
-            //new object[] { "Vattmannstr.11 a", "Vattmannstr.", (short)11, "A" },
-            //new object[] { "Vattmannstr.11", "Vattmannstr.", (short)11, "" },
+            new object[] { "Vattmannstr.11a", "Vattmannstr.", (short)11, "A" },
+            new object[] { "Vattmannstr.11 a", "Vattmannstr.", (short)11, "A" },
+            new object[] { "Vattmannstr.11", "Vattmannstr.", (short)11, "" },
             //new object[] { "    Vattmannstraße 11", "Vattmannstr.", (short)11, "" },
             //new object[] { "   Vattmannstraße 11    ", "Vattmannstr.", (short)11, "" },
             //new object[] { "Vattmannstraße 11    ", "Vattmannstr.", (short)11, "" },

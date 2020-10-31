@@ -1,6 +1,7 @@
 ﻿using AddressSeparation.Attributes;
 using AddressSeparation.Manipulations;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -16,11 +17,8 @@ namespace AddressSeparation.Helper
         #region Properties
 
         public PropertyInfo Property { get; }
-        public int RegexGroupIndex { get; } = -1;
-        public object RegexManipulationInstance { get; }
-
-        public bool HasRegexGroupAttribute => this.RegexGroupIndex > -1;
-        public bool HasManipulateFunction => this.RegexManipulationInstance != null;
+        public Queue<RegexGroup> RegexGroupCollection { get; } = new Queue<RegexGroup>();
+        public bool HasRegexGroupAttribute => this.RegexGroupCollection.Any();
 
         #endregion Properties
 
@@ -33,23 +31,23 @@ namespace AddressSeparation.Helper
         public PropertyRegexGroupMapper(PropertyInfo property)
         {
             this.Property = property;
-
+            
             // get attribute data, if exists
-            CustomAttributeData regexGroupAttributeData = property
+            IEnumerable<CustomAttributeData> regexGroupAttributesData = property
                 .CustomAttributes
-                .SingleOrDefault(x => x.AttributeType == typeof(RegexGroupAttribute));
+                .Where(x => x.AttributeType == typeof(RegexGroupAttribute));
 
-            // if attribute was found, set instance members
-            if (regexGroupAttributeData != null)
+            // if one ore more attributes were found per property, set instance members
+            foreach (var regexGroup in regexGroupAttributesData)
             {
-                var ctorArguments = regexGroupAttributeData.ConstructorArguments;
-
                 // get value of first ctor argument (group index)
-                this.RegexGroupIndex = (int)ctorArguments
+                var ctorArguments = regexGroup.ConstructorArguments;
+                int indexArgument = (int)ctorArguments
                     .FirstOrDefault()
                     .Value;
 
                 // if available, get second argument (manipulation method)
+                object manipulationInstance = null;
                 if (ctorArguments.Count > 1)
                 {
                     // get type and underlying interface
@@ -60,9 +58,13 @@ namespace AddressSeparation.Helper
                     if (manipulationInterfaceName == typeof(IOutputManipulation<>).Name &&
                         manipulationType.IsInterface == false)
                     {
-                        this.RegexManipulationInstance = Activator.CreateInstance(manipulationType);
+                        manipulationInstance = Activator.CreateInstance(manipulationType);
                     }
                 }
+
+                // enqueue match
+                var group = new RegexGroup(indexArgument, manipulationInstance);
+                this.RegexGroupCollection.Enqueue(group);
             }
         }
 

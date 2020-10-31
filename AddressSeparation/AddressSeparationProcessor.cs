@@ -120,19 +120,26 @@ namespace AddressSeparation
             {
                 foreach (var prop in propertyRegexGroupCollection)
                 {
-                    // get value; null, if group is not found
-                    var valueOfGroup = match.Groups[prop.RegexGroupIndex]?.Value;
-
-                    // manipulate value if possible
-                    if (prop.HasManipulateFunction)
+                    // get first matching group value; null, if no group is matching
+                    string valueOfGroup = null;
+                    do
                     {
-                        var manipulationInstance = prop.RegexManipulationInstance;
-                        var manipulationMethod = manipulationInstance.GetType().GetMethod("Invoke");
-                        valueOfGroup = manipulationMethod.Invoke(manipulationInstance, new object[] { valueOfGroup }) as string;
-                    }
+                        // get groups one by one
+                        var currentGroup = prop.RegexGroupCollection.Dequeue();
+                        valueOfGroup = match.Groups[currentGroup.RegexGroupIndex]?.Value;
 
-                    // set value to instance member
-                    this.SetPropertyValue(prop.Property, outputResult.ResolvedAddress, valueOfGroup);
+                        // manipulate value if possible
+                        if (currentGroup.HasManipulateFunction)
+                        {
+                            var manipulationInstance = currentGroup.RegexManipulationInstance;
+                            var manipulationMethod = manipulationInstance.GetType().GetMethod("Invoke");
+                            valueOfGroup = manipulationMethod.Invoke(manipulationInstance, new object[] { valueOfGroup }) as string;
+                        }
+
+                        // set value to instance member
+                        this.SetPropertyValue(prop.Property, outputResult.ResolvedAddress, valueOfGroup);
+
+                    } while (prop.RegexGroupCollection.Count > 0 && String.IsNullOrWhiteSpace(valueOfGroup));
                 }
 
                 // set success

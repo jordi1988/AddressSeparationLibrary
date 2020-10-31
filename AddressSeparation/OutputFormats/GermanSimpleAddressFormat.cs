@@ -8,6 +8,7 @@ namespace AddressSeparation.OutputFormats
         #region Properties
 
         [RegexGroup(1)]
+        [RegexGroup(4)]
         public override string StreetName { get => base.StreetName; set => base.StreetName = value; }
 
         [RegexGroup(2)]
