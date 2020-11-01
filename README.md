@@ -28,7 +28,7 @@ Now, you should do it better: the address should be separated into atomic values
   - **[German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)**: Matches simple german addresses in format `Streetname 123a`
   
 ## Usage
-1. Simply add this [.NET Standard 2.0 library](/AddressSeparation/bin/Release/netstandard2.0/AddressSeparation.dll) as a reference in your project.
+1. Simply add this [.NET Standard 2.0 library](/releases) as a reference in your project.
 2. Choose your correct culture (e. g. [German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)) or create a new one.
 3. Create an instance of `AddressSeparationProcessor` class with your desired culture and process your string or your string array.
 
