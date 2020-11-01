@@ -5,7 +5,7 @@ Who doesn't know that? Some guy developed a database table with one column conta
 That database must be renewed. 
 
 Now, you should do it better: the address should be separated into atomic values.  
-> Here we go Ö
+> Here we go ‚Ä¶
 
 ---
 
@@ -28,7 +28,7 @@ Now, you should do it better: the address should be separated into atomic values
   - **[German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)**: Matches simple german addresses in format `Streetname 123a`
   
 ## Usage
-1. Simply add this [.NET Standard 2.0 library](/releases) as a reference in your project.
+1. Simply add this [.NET Standard 2.0 library](../../releases) as a reference in your project.
 2. Choose your correct culture (e. g. [German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)) or create a new one.
 3. Create an instance of `AddressSeparationProcessor` class with your desired culture and process your string or your string array.
 
@@ -37,7 +37,7 @@ Now, you should do it better: the address should be separated into atomic values
 static void Main(string[] args)
 {
     var processor = new AddressSeparationProcessor<GermanSimpleOutputFormat>();
-    var result = processor.Process('Teststraﬂe 123a');
+    var result = processor.Process('Teststra√üe 123a');
     var address = result.ResolvedAddress;
         
     Console.WriteLine($"Name is {address.StreetName} with number {address.HouseNumber} and affix {address.HouseNumberAffix}");
@@ -86,11 +86,11 @@ It is passed to the `AddressSeparationProcessor<T>` either in constructor or by 
 ```csharp
 public class ShortenGermanStreetInputManipulation : IInputManipulation
 {
-        /// Shortens a German `Straﬂe` to `Str.`.
+        /// Shortens a German `Stra√üe` to `Str.`.
         public Func<string, string> Invoke =>
             (string raw) => raw?
-                .Replace("Straﬂe", "Str.")?
-                .Replace("straﬂe", "str.")?
+                .Replace("Stra√üe", "Str.")?
+                .Replace("stra√üe", "str.")?
                 .Replace("Strasse", "Str.")?
                 .Replace("strasse", "str.");
 }
