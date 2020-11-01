@@ -11,6 +11,16 @@ Now, you should do it better: the address should be separated into atomic values
 
 **Address Separation Library** is an extensible library written in C# for isolating/ dividing/ cutting/ breaking up an address into its parts. This is done by an Regex putting the matching groups into class properties. With the help of user-defined input and output *manipulation functions* it can be made even more powerful when processing an address.
 
+## Table of contents
+1. [Features](#Features)
+2. [Usage](#Usage)
+   1. [Example](#Example)
+   2. [Cultures](#Cultures)
+   3. [Manipulations](#Manipulations)
+   4. [Options](#Options)
+3. [Coming up next ...](#Coming-up-next)
+4. [Contribution appreciated](#Contribution-appreciated)
+
 ## Features
 - Separates a string into multiple atomic values
 - Easy to extend with more cultures and user-defined manipulation functions
@@ -129,7 +139,7 @@ public class GermanSimpleOutputFormat : IOutputFormat
 ### Options
 *Reserved for later use.*
 
-## Coming up next ...
+## Coming up next
 These features may come in the future:
 - NuGet package
 - Excel AddIn
