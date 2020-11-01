@@ -52,22 +52,22 @@ namespace AddressSeparation.UnitTests.Cultures
         {
             // Streets only
             new object[] { "Vattmannstr.", "Vattmannstr.", null, "" },
-            new object[] { "Vattmannstraße", "Vattmannstr.", null, "" },
             new object[] { "Vattmannstrasse", "Vattmannstr.", null, "" },
-            new object[] { "Berliner-Straße", "Berliner-Str.", null, "" },
-            new object[] { "Berliner Straße", "Berliner Str.", null, "" },
+            new object[] { "Vattmannstrasse", "Vattmannstr.", null, "" },
+            new object[] { "Berliner-Strasse", "Berliner-Str.", null, "" },
+            new object[] { "Berliner Strasse", "Berliner Str.", null, "" },
 
             // Normal ones
             new object[] { "Vattmannstr. 11", "Vattmannstr.", (short)11, "" },
-            new object[] { "Vattmannstraße 11", "Vattmannstr.", (short)11, "" },
+            new object[] { "Vattmannstrasse 11", "Vattmannstr.", (short)11, "" },
             new object[] { "Berliner Strasse 11", "Berliner Str.", (short)11, "" },
             new object[] { "Berliner-Strasse 11", "Berliner-Str.", (short)11, "" },
 
             // With affix
             new object[] { "Vattmannstr. 11a", "Vattmannstr.", (short)11, "A" },
             new object[] { "Vattmannstr. 11 A", "Vattmannstr.", (short)11, "A" },
-            new object[] { "Vattmannstraße 11a", "Vattmannstr.", (short)11, "A" },
-            new object[] { "Vattmannstraße 11 A", "Vattmannstr.", (short)11, "A" },
+            new object[] { "Vattmannstrasse 11a", "Vattmannstr.", (short)11, "A" },
+            new object[] { "Vattmannstrasse 11 A", "Vattmannstr.", (short)11, "A" },
             new object[] { "Berliner Strasse 11a", "Berliner Str.", (short)11, "A" },
             new object[] { "Berliner Strasse 11 A", "Berliner Str.", (short)11, "A" },
             new object[] { "Berliner-Strasse 11a", "Berliner-Str.", (short)11, "A" },
