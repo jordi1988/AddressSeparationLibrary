@@ -1,14 +1,15 @@
-﻿using System;
+﻿using AddressSeparation.Cultures;
+using System;
 using System.Diagnostics;
 
-namespace AddressSeparation.OutputFormats
+namespace AddressSeparation.Models
 {
     /// <summary>
     /// Output class of a proccessed address combining the resolved address and the final state.
     /// </summary>
     /// <typeparam name="TOutputFormat"></typeparam>
     [DebuggerDisplay("{RawAddress}: {AddressHasBeenResolved}")]
-    public class OutputResult<TOutputFormat> where TOutputFormat : class, new()
+    public class OutputResult<TOutputFormat> where TOutputFormat : class, IOutputFormat, new()
     {
         #region Properties
 
@@ -20,12 +21,17 @@ namespace AddressSeparation.OutputFormats
         /// <summary>
         /// Output of the processing.
         /// </summary>
-        public TOutputFormat ResolvedAddress { get; }
+        public TOutputFormat ResolvedAddress => this._instance;
 
         /// <summary>
         /// State of the processing.
         /// </summary>
         public bool AddressHasBeenResolved { get; set; }
+
+        /// <summary>
+        /// Same as <see cref="ResolvedAddress"/>. This way, it's more user friendly.
+        /// </summary>
+        private TOutputFormat _instance { get; }
 
         #endregion Properties
 
@@ -38,9 +44,16 @@ namespace AddressSeparation.OutputFormats
         public OutputResult(string rawAddress)
         {
             this.RawAddress = rawAddress;
+            this._instance = Activator.CreateInstance(typeof(TOutputFormat)) as TOutputFormat;
+        }
 
-            var instance = Activator.CreateInstance(typeof(TOutputFormat)) as TOutputFormat;
-            this.ResolvedAddress = instance;
+        /// <summary>
+        /// Get the instance of the underlying type <see cref="TOutputFormat"/>.
+        /// </summary>
+        /// <returns></returns>
+        public TOutputFormat GetInstance()
+        {
+            return _instance;
         }
 
         #endregion Constructors

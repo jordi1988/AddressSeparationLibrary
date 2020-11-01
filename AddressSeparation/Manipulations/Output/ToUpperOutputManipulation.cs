@@ -1,19 +1,19 @@
-﻿namespace AddressSeparation.Manipulations
+﻿namespace AddressSeparation.Manipulations.Output
 {
     /// <summary>
-    /// Transforms the found value to lowercase.
+    /// Transforms the found value to uppercase.
     /// </summary>
-    public class ToLowerOutputManipulation : IOutputManipulation<string>
+    public class ToUpperOutputManipulation : IOutputManipulation<string>
     {
         #region Methods
 
         /// <summary>
-        /// Securely transform a string to lowercase letters.
+        /// Securely transform a string to uppercase letters.
         /// </summary>
         /// <param name="value">Value of group to manipulate.</param>
         public string Invoke(string value)
         {
-            return value?.ToLower();
+            return value?.ToUpper();
         }
 
         #endregion Methods

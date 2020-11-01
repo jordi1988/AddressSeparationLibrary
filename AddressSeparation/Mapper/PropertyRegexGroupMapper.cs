@@ -6,18 +6,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace AddressSeparation.Helper
+namespace AddressSeparation.Mapper
 {
     /// <summary>
-    /// Class for mapping the property and the RegexGroup
+    /// Class for mapping the property and the <see cref="RegexGroupAttribute"/>'s
     /// </summary>
     [DebuggerDisplay("{Property.Name}: {RegexGroupIndex} [{HasRegexGroupAttribute}]")]
     public class PropertyRegexGroupMapper
     {
         #region Properties
 
+        /// <summary>
+        /// Reflected information about the property which will be analyzed.
+        /// </summary>
         public PropertyInfo Property { get; }
-        public Queue<RegexGroup> RegexGroupCollection { get; } = new Queue<RegexGroup>();
+
+        /// <summary>
+        /// Bound <see cref="RegexGroupAttribute"/>'s on a property in a readable way.
+        /// </summary>
+        public Queue<RegexGroupMapper> RegexGroupCollection { get; } = new Queue<RegexGroupMapper>();
+
+        /// <summary>
+        /// Determines if the given property has set the <see cref="RegexGroupAttribute"/>.
+        /// </summary>
         public bool HasRegexGroupAttribute => this.RegexGroupCollection.Any();
 
         #endregion Properties
@@ -27,11 +38,11 @@ namespace AddressSeparation.Helper
         /// <summary>
         /// Maps the given property with the matching RegexGroup
         /// </summary>
-        /// <param name="property"></param>
+        /// <param name="property">Reflected information about the property which will be analyzed.</param>
         public PropertyRegexGroupMapper(PropertyInfo property)
         {
             this.Property = property;
-            
+
             // get attribute data, if exists
             IEnumerable<CustomAttributeData> regexGroupAttributesData = property
                 .CustomAttributes
@@ -63,7 +74,7 @@ namespace AddressSeparation.Helper
                 }
 
                 // enqueue match
-                var group = new RegexGroup(indexArgument, manipulationInstance);
+                var group = new RegexGroupMapper(indexArgument, manipulationInstance);
                 this.RegexGroupCollection.Enqueue(group);
             }
         }

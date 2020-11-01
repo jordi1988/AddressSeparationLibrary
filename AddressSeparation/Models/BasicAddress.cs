@@ -1,5 +1,10 @@
-﻿namespace AddressSeparation.OutputFormats
+﻿using AddressSeparation.Cultures;
+
+namespace AddressSeparation.Models
 {
+    /// <summary>
+    /// Simplest address format as a base class for classes implementing <see cref="IOutputFormat"/>.
+    /// </summary>
     public class BasicAddress
     {
         #region Properties

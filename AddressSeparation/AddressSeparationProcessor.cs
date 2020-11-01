@@ -1,8 +1,9 @@
 ﻿using AddressSeparation.Attributes;
-using AddressSeparation.Helper;
+using AddressSeparation.Cultures;
 using AddressSeparation.Manipulations;
+using AddressSeparation.Mapper;
+using AddressSeparation.Models;
 using AddressSeparation.Options;
-using AddressSeparation.OutputFormats;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,11 +16,11 @@ namespace AddressSeparation
     /// Processor for separating a raw string into multiple groups.
     /// </summary>
     /// <typeparam name="TOutputFormat"></typeparam>
-    public class AddressSeparationProcessor<TOutputFormat> where TOutputFormat : class, new()
+    public class AddressSeparationProcessor<TOutputFormat> where TOutputFormat : class, IOutputFormat, new()
     {
         #region Fields
 
-        private readonly IProcessOptions _options;
+        private readonly IProcessingOptions _options;
         private readonly Queue<IInputManipulation> _inputManipulationQueue;
 
         #endregion Fields
@@ -29,17 +30,32 @@ namespace AddressSeparation
         /// <summary>
         /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}"/>.
         /// </summary>
-        /// <param name="options">Options the processor can work with.</param>
-        public AddressSeparationProcessor(IProcessOptions options) : this(options, null)
+        public AddressSeparationProcessor() : this(null, null)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}" /> with user definedc input manipulation functions.
+        /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}"/> with options.
+        /// </summary>
+        /// <param name="options">Options the processor should consider.</param>
+        public AddressSeparationProcessor(IProcessingOptions options) : this(options, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}" /> with user defined input manipulation functions.
+        /// </summary>
+        /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
+        public AddressSeparationProcessor(Queue<IInputManipulation> inputManipulationQueue) : this(null, inputManipulationQueue)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}" /> with options and user defined input manipulation functions.
         /// </summary>
         /// <param name="options">Options the processor can work with.</param>
-        /// <param name="inputManipulationQueue">Delegate that is called prior to RegEx matching.</param>
-        public AddressSeparationProcessor(IProcessOptions options, Queue<IInputManipulation> inputManipulationQueue)
+        /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
+        public AddressSeparationProcessor(IProcessingOptions options, Queue<IInputManipulation> inputManipulationQueue)
         {
             _options = options;
             _inputManipulationQueue = inputManipulationQueue;
@@ -50,49 +66,24 @@ namespace AddressSeparation
         #region Methods
 
         /// <summary>
-        /// Processes multiple input strings with the given RegEx.
-        /// </summary>
-        /// <remarks>The input and output manipulation functions will also be processed.</remarks>
-        /// <param name="rawAddressesData">Array of raw input addresses</param>
-        /// <exception cref="ArgumentException">Should contain at least one RegexGroup.</exception>
-        /// <returns>Collection of processed addresses. Null if rawAddressesData[] is null.</returns>
-        public ICollection<OutputResult<TOutputFormat>> Process(string[] rawAddressesData)
-        {
-            // sanity check
-            if (rawAddressesData == null)
-            {
-                return null;
-            }
-
-            // wrap the processing
-            var outputCollection = new List<OutputResult<TOutputFormat>>();
-            foreach (var rawAddress in rawAddressesData) // AsParallel if chosen
-            {
-                var singleResult = this.Process(rawAddress);
-                outputCollection.Add(singleResult);
-            }
-
-            return outputCollection;
-        }
-
-        /// <summary>
-        /// Processes the input string with the given RegEx.
+        /// Processes <paramref name="rawAddressData"/> with the RegEx set up in <typeparamref name="TOutputFormat"/>.
         /// </summary>
         /// <remarks>The input and output manipulation functions will also be processed.</remarks>
         /// <param name="rawAddressData">The input string.</param>
-        /// <exception cref="ArgumentException">Should contain at least one RegexGroup.</exception>
-        /// <returns>The processed address.</returns>
+        /// <exception cref="ArgumentNullException"><see cref="IOutputFormat.MatchingRegex"/> must be set up correctly in the generic class.</exception>
+        /// <exception cref="MissingMemberException">Should contain at least one <see cref="RegexGroupAttribute"/>.</exception>
+        /// <returns>The resolved address along with info about the processing.</returns>
         public OutputResult<TOutputFormat> Process(string rawAddressData)
         {
             // sanity check
-            _ = _options ?? throw new ArgumentNullException(nameof(_options));
-            _ = _options.MatchingRegex ?? throw new ArgumentNullException(nameof(_options.MatchingRegex));
+            var outputFormatInstance = Activator.CreateInstance(typeof(TOutputFormat)) as IOutputFormat;
+            _ = outputFormatInstance.MatchingRegex ?? throw new ArgumentNullException(nameof(outputFormatInstance.MatchingRegex));
 
             // create output instance
             var outputResult = new OutputResult<TOutputFormat>(rawAddressData);
 
             // return null, if input is empty
-            if (string.IsNullOrWhiteSpace(rawAddressData))
+            if (String.IsNullOrWhiteSpace(rawAddressData))
             {
                 return outputResult;
             }
@@ -105,17 +96,20 @@ namespace AddressSeparation
             }
 
             // get all properties w/ RegexGroupAttribute and throw exception if there is none
-            var propertyRegexGroupCollection = outputResult.ResolvedAddress.GetType().GetProperties()
+            var propertyRegexGroupCollection = outputResult
+                .GetInstance()
+                .GetType()
+                .GetProperties()
                 .Select(prop => new PropertyRegexGroupMapper(prop))
                 .Where(x => x.HasRegexGroupAttribute == true);
 
             if (propertyRegexGroupCollection.Any() == false)
             {
-                throw new ArgumentException($"Class {nameof(TOutputFormat)} has no property members with {nameof(RegexGroupAttribute)}.");
+                throw new MissingMemberException($"Class {nameof(TOutputFormat)} has no property members with {nameof(RegexGroupAttribute)}.");
             }
 
             // assign to Regex bindings
-            var match = _options.MatchingRegex.Match(rawAddressData);
+            var match = outputFormatInstance.MatchingRegex.Match(rawAddressData);
             if (match.Success)
             {
                 foreach (var prop in propertyRegexGroupCollection)
@@ -137,8 +131,7 @@ namespace AddressSeparation
                         }
 
                         // set value to instance member
-                        this.SetPropertyValue(prop.Property, outputResult.ResolvedAddress, valueOfGroup);
-
+                        this.SetPropertyValue(prop.Property, outputResult.GetInstance(), valueOfGroup);
                     } while (prop.RegexGroupCollection.Count > 0 && String.IsNullOrWhiteSpace(valueOfGroup));
                 }
 
@@ -148,6 +141,33 @@ namespace AddressSeparation
 
             // return filled instance
             return outputResult;
+        }
+
+        /// <summary>
+        /// Processes multiple <paramref name="rawAddressData"/> with the RegEx set up in <typeparamref name="TOutputFormat"/>.
+        /// </summary>
+        /// <remarks>The input and output manipulation functions will also be processed.</remarks>
+        /// <param name="rawAddressesData">Array of raw input strings</param>
+        /// <exception cref="ArgumentNullException"><see cref="IOutputFormat.MatchingRegex"/> must be set up correctly in the generic class.</exception>
+        /// <exception cref="MissingMemberException">Should contain at least one <see cref="RegexGroupAttribute"/>.</exception>
+        /// <returns>Collection of the resolved addresses along with info about the processing. Null if <paramref name="rawAddressesData"/> is null.</returns>
+        public ICollection<OutputResult<TOutputFormat>> Process(string[] rawAddressesData)
+        {
+            // sanity check
+            if (rawAddressesData == null)
+            {
+                return null;
+            }
+
+            // wrap the processing
+            var outputCollection = new List<OutputResult<TOutputFormat>>();
+            foreach (var rawAddress in rawAddressesData)
+            {
+                var singleResult = this.Process(rawAddress);
+                outputCollection.Add(singleResult);
+            }
+
+            return outputCollection;
         }
 
         /// <summary>

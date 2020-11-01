@@ -2,6 +2,9 @@
 
 namespace AddressSeparation.Manipulations
 {
+    /// <summary>
+    /// Used for manipulating the input value before any other processes take place.
+    /// </summary>
     public interface IInputManipulation
     {
         #region Properties

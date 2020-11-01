@@ -1,6 +1,6 @@
+using AddressSeparation.Cultures.de;
 using AddressSeparation.Manipulations;
-using AddressSeparation.Options;
-using AddressSeparation.OutputFormats;
+using AddressSeparation.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -35,7 +35,7 @@ namespace AddressSeparation.Tests
             new object[] { "Berliner-Strasse 11a", "Berliner-Strasse ", (short)11, "A" },
             new object[] { "Berliner-Strasse 11 A", "Berliner-Strasse ", (short)11, "A" },
 
-            // With errors
+            // No whitespace
             new object[] { "Vattmannstr.11a", "Vattmannstr.", (short)11, "A" },
             new object[] { "Vattmannstr.11 a", "Vattmannstr.", (short)11, "A" },
             new object[] { "Vattmannstr.11", "Vattmannstr.", (short)11, "" },
@@ -44,8 +44,7 @@ namespace AddressSeparation.Tests
             //new object[] { "Vattmannstraﬂe 11    ", "Vattmannstr.", (short)11, "" },
         };
 
-        private AddressSeparationProcessor<GermanSimpleAddressFormat> _processor;
-        private GermanSimpleAddressProcessOptions _options;
+        private AddressSeparationProcessor<GermanSimpleOutputFormat> _processor;
 
         #endregion Fields
 
@@ -59,16 +58,18 @@ namespace AddressSeparation.Tests
             // inputManipulationQueue.Enqueue(new TrimInputManipulation());
             // inputManipulationQueue.Enqueue(new ShortenGermanStreetInputManipulation());
 
-            this._options = new GermanSimpleAddressProcessOptions();
-            this._processor = new AddressSeparationProcessor<GermanSimpleAddressFormat>(this._options, inputManipulationQueue);
+            // this._options = new GermanSimpleAddressProcessOptions();
+            // this._processor = new AddressSeparationProcessor<GermanSimpleOutputFormat>(this._options, inputManipulationQueue);
+
+            this._processor = new AddressSeparationProcessor<GermanSimpleOutputFormat>();
         }
 
         [TestCaseSource("CheckupAddresses")]
         public void Addresses_WithoutInputManipulation_ReturnCorrectValues(string input, string streetName, short? houseNumber, string houseNumberAffix)
         {
             // act
-            OutputResult<GermanSimpleAddressFormat> result = _processor.Process(input);
-            GermanSimpleAddressFormat address = result.ResolvedAddress;
+            OutputResult<GermanSimpleOutputFormat> result = _processor.Process(input);
+            GermanSimpleOutputFormat address = result.ResolvedAddress;
 
             // assert
             Assert.AreEqual(streetName, address.StreetName);
