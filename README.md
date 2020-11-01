@@ -41,9 +41,7 @@ static void Main(string[] args)
     var address = result.ResolvedAddress;
         
     Console.WriteLine($"
-        Name is {address.StreetName} 
-        with number {address.HouseNumber} 
-        and affix {address.HouseNumberAffix}");
+        Name is {address.StreetName} with number {address.HouseNumber} and affix {address.HouseNumberAffix}");
 }
 ```
 *some console application*
