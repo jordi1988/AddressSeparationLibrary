@@ -37,10 +37,13 @@ Now, you should do it better: the address should be separated into atomic values
 static void Main(string[] args)
 {
     var processor = new AddressSeparationProcessor<GermanSimpleOutputFormat>();
-    var result = processor.Process('Teststraße 123a');
+    var result = processor.Process("Teststraße 123a");
     var address = result.ResolvedAddress;
         
-    Console.WriteLine($"Name is {address.StreetName} with number {address.HouseNumber} and affix {address.HouseNumberAffix}");
+    Console.WriteLine($"
+        Name is {address.StreetName} 
+        with number {address.HouseNumber} 
+        and affix {address.HouseNumberAffix}");
 }
 ```
 *some console application*
