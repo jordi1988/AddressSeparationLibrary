@@ -72,6 +72,22 @@ namespace AddressSeparation
         /// <param name="rawAddressData">The input string.</param>
         /// <exception cref="ArgumentNullException"><see cref="IOutputFormat.MatchingRegex"/> must be set up correctly in the generic class.</exception>
         /// <exception cref="MissingMemberException">Should contain at least one <see cref="RegexGroupAttribute"/>.</exception>
+        /// <example>
+        /// This sample shows how to call the <see cref="AddressSeparationProcessor{TOutputFormat}"/> constructor.
+        /// <code>
+        /// class TestClass
+        /// {
+        ///     static int Main()
+        ///     {
+        ///         var processor = new AddressSeparationProcessor{GermanSimpleOutputFormat}();
+        ///         var result = processor.Process('Teststraße 123a');
+        ///         var address = result.ResolvedAddress;
+        ///
+        ///         Console.WriteLine($"Name is {address.StreetName} with number {address.HouseNumber} and affix {address.HouseNumberAffix}");
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         /// <returns>The resolved address along with info about the processing.</returns>
         public OutputResult<TOutputFormat> Process(string rawAddressData)
         {
@@ -150,6 +166,27 @@ namespace AddressSeparation
         /// <param name="rawAddressesData">Array of raw input strings</param>
         /// <exception cref="ArgumentNullException"><see cref="IOutputFormat.MatchingRegex"/> must be set up correctly in the generic class.</exception>
         /// <exception cref="MissingMemberException">Should contain at least one <see cref="RegexGroupAttribute"/>.</exception>
+        /// <example>
+        /// This sample shows how to call the <see cref="AddressSeparationProcessor{TOutputFormat}"/> constructor.
+        /// <code>
+        /// class TestClass
+        /// {
+        ///     static int Main()
+        ///     {
+        ///         string[] inputAddresses = new string[] { "Teststraße 123a", "Teststr. 456" };
+        ///         
+        ///         var processor = new AddressSeparationProcessor{GermanSimpleOutputFormat}();
+        ///         var results = processor.Process(inputAddresses);
+        ///         
+        ///         foreach (var result in results)
+        ///         {
+        ///             var address = result.ResolvedAddress;
+        ///             Console.WriteLine($"Name is {address.StreetName} with number {address.HouseNumber} and affix {address.HouseNumberAffix}");
+        ///         }
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         /// <returns>Collection of the resolved addresses along with info about the processing. Null if <paramref name="rawAddressesData"/> is null.</returns>
         public ICollection<OutputResult<TOutputFormat>> Process(string[] rawAddressesData)
         {
