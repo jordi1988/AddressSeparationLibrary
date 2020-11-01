@@ -20,8 +20,9 @@ namespace AddressSeparation
     {
         #region Fields
 
-        private readonly IProcessingOptions _options;
-        private readonly Queue<IInputManipulation> _inputManipulationQueue;
+        private IProcessingOptions _options;
+
+        private Queue<IInputManipulation> _inputManipulationQueue;
 
         #endregion Fields
 
@@ -48,6 +49,15 @@ namespace AddressSeparation
         /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
         public AddressSeparationProcessor(Queue<IInputManipulation> inputManipulationQueue) : this(null, inputManipulationQueue)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}" /> with user defined input manipulation function.
+        /// </summary>
+        /// <param name="inputManipulation">Delegates that is called prior to RegEx matching.</param>
+        public AddressSeparationProcessor(IInputManipulation inputManipulation) : this(null, null)
+        {
+            this.SetInputManipulation(inputManipulation);
         }
 
         /// <summary>
@@ -174,10 +184,10 @@ namespace AddressSeparation
         ///     static int Main()
         ///     {
         ///         string[] inputAddresses = new string[] { "Teststraße 123a", "Teststr. 456" };
-        ///         
+        ///
         ///         var processor = new AddressSeparationProcessor{GermanSimpleOutputFormat}();
         ///         var results = processor.Process(inputAddresses);
-        ///         
+        ///
         ///         foreach (var result in results)
         ///         {
         ///             var address = result.ResolvedAddress;
@@ -205,6 +215,42 @@ namespace AddressSeparation
             }
 
             return outputCollection;
+        }
+
+        /// <summary>
+        /// Set up new <see cref="IProcessingOptions"/>.
+        /// </summary>
+        /// <param name="options">Options the processor should consider.</param>
+        public void SetOptions(IProcessingOptions options)
+        {
+            this._options = options;
+        }
+
+        /// <summary>
+        /// Sets user defined functions in sequence for processing prior to RegEx matching.
+        /// </summary>
+        /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
+        public void SetInputManipulationQueue(Queue<IInputManipulation> inputManipulationQueue)
+        {
+            this._inputManipulationQueue = inputManipulationQueue;
+        }
+
+        /// <summary>
+        /// Sets a user defined function for processing prior to RegEx matching.
+        /// </summary>
+        /// <remarks>
+        /// Appends an <see cref="IInputManipulation"/> delegate to the existing queue. 
+        /// <para>If queue does not exist, it will be created.</para>
+        /// </remarks>
+        /// <param name="inputManipulationQueue">Delegates that ist called prior to RegEx matching.</param>
+        public void SetInputManipulation(IInputManipulation inputManipulation)
+        {
+            if (this._inputManipulationQueue == null)
+            {
+                this._inputManipulationQueue = new Queue<IInputManipulation>();
+            }
+
+            this._inputManipulationQueue.Enqueue(inputManipulation);
         }
 
         /// <summary>

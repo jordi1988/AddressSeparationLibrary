@@ -13,7 +13,11 @@ namespace AddressSeparation.Manipulations.Input
         /// Shortens a German `Straße` to `Str.`.
         /// </summary>
         public Func<string, string> Invoke =>
-            (string raw) => raw?.Replace("Straße", "Str.")?.Replace("straße", "str.");
+            (string raw) => raw?
+                .Replace("Straße", "Str.")?
+                .Replace("straße", "str.")?
+                .Replace("Strasse", "Str.")?
+                .Replace("strasse", "str.");
 
         #endregion Properties
     }

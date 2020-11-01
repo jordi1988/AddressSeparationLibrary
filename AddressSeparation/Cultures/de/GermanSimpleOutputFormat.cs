@@ -30,7 +30,7 @@ namespace AddressSeparation.Cultures.de
         /// <summary>
         /// Matches group 1 (or 4 if 1 is empty) for the street name.
         /// </summary>
-        [RegexGroup(1)]
+        [RegexGroup(1, typeof(TrimOutputManipulation))]
         [RegexGroup(4)]
         public override string StreetName { get => base.StreetName; set => base.StreetName = value; }
 
