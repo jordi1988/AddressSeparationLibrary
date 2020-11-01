@@ -1,13 +1,11 @@
 using AddressSeparation.Cultures.de;
-using AddressSeparation.Manipulations;
 using AddressSeparation.Manipulations.Input;
 using AddressSeparation.Models;
 using NUnit.Framework;
-using System.Collections.Generic;
 
-namespace AddressSeparation.Tests.Cultures
+namespace AddressSeparation.UnitTests.Cultures
 {
-    public class GermanSimpleAddressUnitTest
+    internal class GermanSimpleAddressUnitTests
     {
         #region Fields
 
@@ -95,6 +93,7 @@ namespace AddressSeparation.Tests.Cultures
         }
 
         [TestCaseSource("TestAddressesNoInputManipulation")]
+        [SetCulture("de-DE")]
         public void NoManipulation_ReturnCorrectValues(string input, string streetName, short? houseNumber, string houseNumberAffix)
         {
             // act
@@ -108,6 +107,7 @@ namespace AddressSeparation.Tests.Cultures
         }
 
         [TestCaseSource("TestAddressesTrimManipulation")]
+        [SetCulture("de-DE")]
         public void TrimManipulation_ReturnCorrectValues(string input, string streetName, short? houseNumber, string houseNumberAffix)
         {
             // arrange
@@ -124,6 +124,7 @@ namespace AddressSeparation.Tests.Cultures
         }
 
         [TestCaseSource("TestAddressesShortenManipulation")]
+        [SetCulture("de-DE")]
         public void ShortenManipulation_ReturnCorrectValues(string input, string streetName, short? houseNumber, string houseNumberAffix)
         {
             // arrange

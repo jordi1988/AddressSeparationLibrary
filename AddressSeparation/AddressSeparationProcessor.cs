@@ -108,7 +108,7 @@ namespace AddressSeparation
             // create output instance
             var outputResult = new OutputResult<TOutputFormat>(rawAddressData);
 
-            // return null, if input is empty
+            // return empty result, if input is empty
             if (String.IsNullOrWhiteSpace(rawAddressData))
             {
                 return outputResult;
@@ -239,7 +239,7 @@ namespace AddressSeparation
         /// Sets a user defined function for processing prior to RegEx matching.
         /// </summary>
         /// <remarks>
-        /// Appends an <see cref="IInputManipulation"/> delegate to the existing queue. 
+        /// Appends an <see cref="IInputManipulation"/> delegate to the existing queue.
         /// <para>If queue does not exist, it will be created.</para>
         /// </remarks>
         /// <param name="inputManipulationQueue">Delegates that ist called prior to RegEx matching.</param>
