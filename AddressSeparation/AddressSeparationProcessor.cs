@@ -1,5 +1,5 @@
 ﻿using AddressSeparation.Attributes;
-using AddressSeparation.Cultures;
+using AddressSeparation.OutputFormats;
 using AddressSeparation.Manipulations;
 using AddressSeparation.Mapper;
 using AddressSeparation.Models;

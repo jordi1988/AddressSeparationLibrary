@@ -1,6 +1,6 @@
 ﻿using AddressSeparation.Manipulations.Output;
 using AddressSeparation.Mapper;
-using AddressSeparation.UnitTests.Data.Cultures;
+using AddressSeparation.UnitTests.Data.OutputFormats;
 using NUnit.Framework;
 using System.Reflection;
 

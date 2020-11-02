@@ -5,7 +5,7 @@ using AddressSeparation.Options;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 
-namespace AddressSeparation.Cultures.de
+namespace AddressSeparation.OutputFormats.de
 {
     /// <summary>
     /// Matches simple german addresses without a zone in the format "Streetname 123a"

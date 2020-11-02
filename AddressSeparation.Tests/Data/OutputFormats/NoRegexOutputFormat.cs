@@ -1,7 +1,7 @@
-﻿using AddressSeparation.Cultures;
+﻿using AddressSeparation.OutputFormats;
 using System.Text.RegularExpressions;
 
-namespace AddressSeparation.UnitTests.Data.Cultures
+namespace AddressSeparation.UnitTests.Data.OutputFormats
 {
     internal class NoRegexOutputFormat : IOutputFormat
     {

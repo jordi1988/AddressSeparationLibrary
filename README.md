@@ -15,7 +15,7 @@ Now, you should do it better: the address should be separated into atomic values
 1. [Features](#Features)
 2. [Usage](#Usage)
    1. [Example](#Example)
-   2. [Cultures](#Cultures)
+   2. [Output formats](#Output-formats)
    3. [Manipulations](#Manipulations)
    4. [Options](#Options)
 3. [Coming up next ...](#Coming-up-next)
@@ -23,14 +23,14 @@ Now, you should do it better: the address should be separated into atomic values
 
 ## Features
 - Separates a string into multiple atomic values
-- Easy to extend with more cultures and user-defined manipulation functions
-- Currently supported cultures/address formats
-  - **[German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)**: Matches simple german addresses in format `Streetname 123a`
+- Easy to extend with more output formats and user-defined manipulation functions
+- Currently supported output formats
+  - **[German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)**: Matches simple german addresses in format `Streetname 123a`
   
 ## Usage
-1. Simply add this [.NET Standard 2.0 library](../../releases) as a reference in your project.
-2. Choose your correct culture (e. g. [German, simple](/AddressSeparation/Cultures/de/GermanSimpleOutputFormat.cs)) or create a new one.
-3. Create an instance of `AddressSeparationProcessor` class with your desired culture and process your string or your string array.
+1. Simply add this [.NET Standard 2.0 library](../../releases) as a reference to your project.
+2. Choose your correct output format (e. g. [German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)) or create a new one.
+3. Create an instance of `AddressSeparationProcessor` class with your desired output format and process your string or your string array.
 
 ### Example
 ```csharp
@@ -46,8 +46,8 @@ static void Main(string[] args)
 ```
 *some console application*
 
-### Cultures
-Create new cultures by creating a class implementing `IOutputFormat` interface. You then need to pass in a regular expression with groups connected to your properties by `RegexGroupAttribute`. *Multiple attribute usage* is also allowed if more than one group is assigned to a single property. The first non-empty group will be assigned to the property. 
+### Output formats `IOutputFormat`
+Create new output formats by creating a class implementing `IOutputFormat` interface. You then need to pass in a regular expression with groups connected to your properties by `RegexGroupAttribute`. *Multiple attribute usage* is also allowed if more than one group is assigned to a single property. The first non-empty group will be assigned to the property. 
 
 It is as simple as that:
 ```csharp
@@ -67,7 +67,7 @@ public class GermanSimpleOutputFormat : IOutputFormat
 
         // Matches group 2 for the house number with nullable short.
         [RegexGroup(2)]
-        public override short? HouseNumber { get; set; }
+        public short? HouseNumber { get; set; }
 
         // Matches group 3 for the affix of the house number.
         // Has a user-defined output manipulation function for transforming the affix to uppercase.
@@ -137,7 +137,7 @@ public class GermanSimpleOutputFormat : IOutputFormat
 ```
 *GermanSimpleOutputFormat.cs (original class edited for brevity)* 
 
-### Options
+### Options `IProcessingOptions`
 *Reserved for later use.*
 
 ## Coming up next
@@ -148,4 +148,4 @@ These features may come in the future:
 - Web application for separating addresses
 
 ## Contribution appreciated
-Lets make this library complete by adding all cultures/address formats of the world! Feel free to contribute!
+Lets make this library complete by adding all output/address formats of the world! Feel free to contribute!

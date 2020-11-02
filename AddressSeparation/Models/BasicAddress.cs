@@ -1,4 +1,4 @@
-﻿using AddressSeparation.Cultures;
+﻿using AddressSeparation.OutputFormats;
 
 namespace AddressSeparation.Models
 {

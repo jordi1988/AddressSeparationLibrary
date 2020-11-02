@@ -1,9 +1,9 @@
-using AddressSeparation.Cultures.de;
+using AddressSeparation.OutputFormats.de;
 using AddressSeparation.Manipulations.Input;
 using AddressSeparation.Models;
 using NUnit.Framework;
 
-namespace AddressSeparation.UnitTests.Cultures
+namespace AddressSeparation.UnitTests.OutputFormats
 {
     internal class GermanSimpleAddressUnitTests
     {

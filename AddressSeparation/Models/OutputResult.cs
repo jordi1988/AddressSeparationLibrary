@@ -1,4 +1,4 @@
-﻿using AddressSeparation.Cultures;
+﻿using AddressSeparation.OutputFormats;
 using System;
 using System.Diagnostics;
 

@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AddressSeparation.Cultures
+namespace AddressSeparation.OutputFormats
 {
     /// <summary>
-    /// Interface must be implemented for <see cref="AddressSeparationProcessor{TOutputFormat}"/> when setting up a new culture.
+    /// Interface must be implemented for <see cref="AddressSeparationProcessor{TOutputFormat}"/> when setting up a new output format.
     /// </summary>
     public interface IOutputFormat
     {
