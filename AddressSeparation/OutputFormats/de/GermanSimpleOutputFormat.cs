@@ -11,7 +11,7 @@ namespace AddressSeparation.OutputFormats.de
     /// Matches simple german addresses without a zone in the format "Streetname 123a"
     /// </summary>
     [DisplayName("German, simple")]
-    [Description("Matches simple german addresses in format `Streetname 123a`")]
+    [Description("Matches german addresses in format `Streetname 123a`")]
     public class GermanSimpleOutputFormat : BasicAddress, IOutputFormat
     {
         #region Properties

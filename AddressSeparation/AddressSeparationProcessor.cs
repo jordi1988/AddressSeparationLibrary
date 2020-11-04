@@ -1,9 +1,9 @@
 ﻿using AddressSeparation.Attributes;
-using AddressSeparation.OutputFormats;
 using AddressSeparation.Manipulations;
 using AddressSeparation.Mapper;
 using AddressSeparation.Models;
 using AddressSeparation.Options;
+using AddressSeparation.OutputFormats;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,13 +18,19 @@ namespace AddressSeparation
     /// <typeparam name="TOutputFormat"></typeparam>
     public class AddressSeparationProcessor<TOutputFormat> where TOutputFormat : class, IOutputFormat, new()
     {
-        #region Fields
+        #region Properties
 
-        private IProcessingOptions _options;
+        /// <summary>
+        /// Options the processor should consider.
+        /// </summary>
+        public IProcessingOptions Options { get; set; }
 
-        private Queue<IInputManipulation> _inputManipulationQueue;
+        /// <summary>
+        /// Gets the queue containing user-defined functions for input manipulation.
+        /// </summary>
+        public Queue<IInputManipulation> InputManipulationQueue { get; private set; }
 
-        #endregion Fields
+        #endregion Properties
 
         #region Constructors
 
@@ -38,7 +44,7 @@ namespace AddressSeparation
         /// <summary>
         /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}"/> with options.
         /// </summary>
-        /// <param name="options">Options the processor should consider.</param>
+        /// <param name="options">Options the processor should consider. <see cref="DefaultProcessingOptions"/> if none provided.</param>
         public AddressSeparationProcessor(IProcessingOptions options) : this(options, null)
         {
         }
@@ -63,12 +69,12 @@ namespace AddressSeparation
         /// <summary>
         /// Creates a new instance of <see cref="AddressSeparationProcessor{TOutputFormat}" /> with options and user defined input manipulation functions.
         /// </summary>
-        /// <param name="options">Options the processor can work with.</param>
+        /// <param name="options">Options the processor can work with. <see cref="DefaultProcessingOptions"/> if none provided.</param>
         /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
         public AddressSeparationProcessor(IProcessingOptions options, Queue<IInputManipulation> inputManipulationQueue)
         {
-            _options = options;
-            _inputManipulationQueue = inputManipulationQueue;
+            Options = options;
+            InputManipulationQueue = inputManipulationQueue;
         }
 
         #endregion Constructors
@@ -104,6 +110,7 @@ namespace AddressSeparation
             // sanity check
             var outputFormatInstance = Activator.CreateInstance(typeof(TOutputFormat)) as IOutputFormat;
             _ = outputFormatInstance.MatchingRegex ?? throw new ArgumentNullException(nameof(outputFormatInstance.MatchingRegex));
+            Options = Options ?? new DefaultProcessingOptions();
 
             // create output instance
             var outputResult = new OutputResult<TOutputFormat>(rawAddressData);
@@ -115,11 +122,7 @@ namespace AddressSeparation
             }
 
             // call user defined input functions
-            while (_inputManipulationQueue != null && _inputManipulationQueue.Count > 0)
-            {
-                var func = _inputManipulationQueue.Dequeue();
-                rawAddressData = func.Invoke(rawAddressData);
-            }
+            rawAddressData = this.ProcessInputManipulationQueue(rawAddressData);
 
             // get all properties w/ RegexGroupAttribute and throw exception if there is none
             var propertyRegexGroupCollection = outputResult
@@ -129,9 +132,10 @@ namespace AddressSeparation
                 .Select(prop => new PropertyRegexGroupMapper(prop))
                 .Where(x => x.HasRegexGroupAttribute == true);
 
-            if (propertyRegexGroupCollection.Any() == false)
+            if (Options.ThrowIfNoRegexGroupPropertyProvided &&
+                propertyRegexGroupCollection.Any() == false)
             {
-                throw new MissingMemberException($"Class {nameof(TOutputFormat)} has no property members with {nameof(RegexGroupAttribute)}.");
+                throw new MissingMemberException($"Class {typeof(TOutputFormat).Name} has no property members with {nameof(RegexGroupAttribute)}.");
             }
 
             // assign to Regex bindings
@@ -144,17 +148,10 @@ namespace AddressSeparation
                     string valueOfGroup = null;
                     do
                     {
-                        // get groups one by one
+                        // get groups one by one and manipulate if necessary
                         var currentGroup = prop.RegexGroupCollection.Dequeue();
                         valueOfGroup = match.Groups[currentGroup.RegexGroupIndex]?.Value;
-
-                        // manipulate value if possible
-                        if (currentGroup.HasManipulateFunction)
-                        {
-                            var manipulationInstance = currentGroup.RegexManipulationInstance;
-                            var manipulationMethod = manipulationInstance.GetType().GetMethod("Invoke");
-                            valueOfGroup = manipulationMethod.Invoke(manipulationInstance, new object[] { valueOfGroup }) as string;
-                        }
+                        valueOfGroup = this.ProcessOutputManipulation(valueOfGroup, currentGroup);
 
                         // set value to instance member
                         this.SetPropertyValue(prop.Property, outputResult.GetInstance(), valueOfGroup);
@@ -218,39 +215,30 @@ namespace AddressSeparation
         }
 
         /// <summary>
-        /// Set up new <see cref="IProcessingOptions"/>.
-        /// </summary>
-        /// <param name="options">Options the processor should consider.</param>
-        public void SetOptions(IProcessingOptions options)
-        {
-            this._options = options;
-        }
-
-        /// <summary>
-        /// Sets user defined functions in sequence for processing prior to RegEx matching.
-        /// </summary>
-        /// <param name="inputManipulationQueue">Queue with delegates that are called prior to RegEx matching.</param>
-        public void SetInputManipulationQueue(Queue<IInputManipulation> inputManipulationQueue)
-        {
-            this._inputManipulationQueue = inputManipulationQueue;
-        }
-
-        /// <summary>
         /// Sets a user defined function for processing prior to RegEx matching.
         /// </summary>
         /// <remarks>
         /// Appends an <see cref="IInputManipulation"/> delegate to the existing queue.
         /// <para>If queue does not exist, it will be created.</para>
         /// </remarks>
-        /// <param name="inputManipulationQueue">Delegates that ist called prior to RegEx matching.</param>
+        /// <param name="inputManipulation">Delegate that ist called prior to RegEx matching.</param>
         public void SetInputManipulation(IInputManipulation inputManipulation)
         {
-            if (this._inputManipulationQueue == null)
+            if (this.InputManipulationQueue == null)
             {
-                this._inputManipulationQueue = new Queue<IInputManipulation>();
+                this.InputManipulationQueue = new Queue<IInputManipulation>();
             }
 
-            this._inputManipulationQueue.Enqueue(inputManipulation);
+            this.InputManipulationQueue.Enqueue(inputManipulation);
+        }
+
+        /// <summary>
+        /// Sets user defined functions in sequence for processing prior to RegEx matching.
+        /// </summary>
+        /// <param name="inputManipulation">Queue with delegates that are called prior to RegEx matching.</param>
+        public void SetInputManipulation(Queue<IInputManipulation> inputManipulationQueue)
+        {
+            this.InputManipulationQueue = inputManipulationQueue;
         }
 
         /// <summary>
@@ -284,6 +272,42 @@ namespace AddressSeparation
                     property.SetValue(instance, result);
                 }
             }
+        }
+
+        /// <summary>
+        /// Call user defined output manipulation functions.
+        /// </summary>
+        /// <param name="value">Group value to be manipulated with given functions.</param>
+        /// <param name="group">Group containing the manipulation functions.</param>
+        /// <returns>Manipulated value</returns>
+        private string ProcessOutputManipulation(string value, RegexGroupMapper group)
+        {
+            // manipulate value if possible
+            if (group.HasManipulateFunction)
+            {
+                var manipulationInstance = group.RegexManipulationInstance;
+                var manipulationMethod = manipulationInstance.GetType().GetMethod("Invoke");
+                value = manipulationMethod.Invoke(manipulationInstance, new object[] { value }) as string;
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Call user defined input manipulation functions.
+        /// </summary>
+        /// <param name="rawAddress">Raw address to be manipulated with given functions.</param>
+        /// <returns>Manipulated address</returns>
+        private string ProcessInputManipulationQueue(string rawAddress)
+        {
+            // complete every function in queue
+            while (InputManipulationQueue != null && InputManipulationQueue.Count > 0)
+            {
+                var func = InputManipulationQueue.Dequeue();
+                rawAddress = func.Invoke(rawAddress);
+            }
+
+            return rawAddress;
         }
 
         #endregion Methods

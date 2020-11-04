@@ -17,20 +17,21 @@ Now, you should do it better: the address should be separated into atomic values
    1. [Example](#Example)
    2. [Output formats](#Output-formats)
    3. [Manipulations](#Manipulations)
-   4. [Options](#Options)
+   4. [Helper](#Helper)
 3. [Coming up next ...](#Coming-up-next)
 4. [Contribution appreciated](#Contribution-appreciated)
 
 ## Features
 - Separates a string into multiple atomic values
 - Easy to extend with more output formats and user-defined manipulation functions
+- No external dependencies
 - Currently supported output formats
-  - **[German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)**: Matches simple german addresses in format `Streetname 123a`
+  - **[German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)**: Matches simple German addresses in format `Streetname 123a`
   
 ## Usage
-1. Simply add this [.NET Standard 2.0 library](../../releases) as a reference to your project.
+1. Simply grab this library from [NuGet](https://www.nuget.org/packages/AddressSeparation/) or download the binary from [GitHub](../../releases) and add it as a reference to your project.
 2. Choose your correct output format (e. g. [German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)) or create a new one.
-3. Create an instance of `AddressSeparationProcessor` class with your desired output format and process your string or your string array.
+3. Create an instance of `AddressSeparationProcessor` class with your desired output format and process your string/string array.
 
 ### Example
 ```csharp
@@ -51,6 +52,8 @@ Create new output formats by creating a class implementing `IOutputFormat` inter
 
 It is as simple as that:
 ```csharp
+[DisplayName("German, simple")]
+[Description("Matches german addresses in format `Streetname 123a`")]
 public class GermanSimpleOutputFormat : IOutputFormat
 {
         // Regex processing your address
@@ -81,7 +84,7 @@ public class GermanSimpleOutputFormat : IOutputFormat
 Manipulations are divided into input and output manipulations. Manipulation classes can either implement `IInputManipulation` or `IOutputManipulation`.  
 
 #### Input manipulation `IInputManipulation`
-Input manipulation is for editing the *raw input address string* before any proccessing takes place.  
+Input manipulation is for editing the *raw input address string* before any processing takes place.  
 It is passed to the `AddressSeparationProcessor<T>` either in constructor or by calling `SetInputManipulation()` for single manipulation functions or `SetInputManipulationQueue()` for multiple manipulation functions.
   
 ```csharp
@@ -137,15 +140,24 @@ public class GermanSimpleOutputFormat : IOutputFormat
 ```
 *GermanSimpleOutputFormat.cs (original class edited for brevity)* 
 
-### Options `IProcessingOptions`
-*Reserved for later use.*
+### Helper
+`OutputFormatHelper` class can find all output formats in this library or in your program. Get a list including display name and description (read from `DisplayNameAttribute` and `DescriptionAttribute`) by calling:
+```csharp
+// find all pre-defined output formats
+IEnumerable<OutputFormatMapper> libraryOutputFormats = OutputFormatHelper.GetOutputFormats();
+
+// find your own output formats
+var myAssembly = Assembly.GetExecutingAssembly();
+IEnumerable<OutputFormatMapper> myOutputFormats = OutputFormatHelper.GetOutputFormats(myAssembly);
+```
+
+If you are unsure which output format **fits your needs**, try calling `FindMatchingOutputFormats` of `OutputFormatHelper` and get suggestions based on a given input address.
+
 
 ## Coming up next
 These features may come in the future:
-- NuGet package
-- Excel AddIn
-- Service for startup.cs
-- Web application for separating addresses
+- Excel Add in
+- More output formats
 
 ## Contribution appreciated
-Lets make this library complete by adding all output/address formats of the world! Feel free to contribute!
+Let's make this library complete by adding all output/address formats of the world! Feel free to contribute!

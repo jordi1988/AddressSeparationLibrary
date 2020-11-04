@@ -1,5 +1,6 @@
 ﻿using AddressSeparation.Manipulations;
 using AddressSeparation.Manipulations.Input;
+using AddressSeparation.Options;
 using AddressSeparation.UnitTests.Data.OutputFormats;
 using NUnit.Framework;
 using System;
@@ -93,6 +94,22 @@ namespace AddressSeparation.UnitTests
         }
 
         [TestCase]
+        public void EmptyConstructor_ProcessingNoOptions_ReturnsDefaultProcessingOptions()
+        {
+            // arrange
+            var input = "    Teststraße 123     ";
+            var processor = new AddressSeparationProcessor<InputSameAsOutputOutputFormat>(null, null);
+
+            // act
+            processor.SetInputManipulation(new TrimInputManipulation());
+            var result = processor.Process(input);
+
+            // assert
+            Assert.IsInstanceOf(typeof(DefaultProcessingOptions), processor.Options,
+                "Options should always be set at the beginning of Process().");
+        }
+
+        [TestCase]
         public void EmptyConstructor_SetInputManipulation_WillProcessFunction()
         {
             // arrange
@@ -120,7 +137,7 @@ namespace AddressSeparation.UnitTests
             queue.Enqueue(new TrimInputManipulation());
 
             // act
-            processor.SetInputManipulationQueue(queue);
+            processor.SetInputManipulation(queue);
             var result = processor.Process(input);
 
             // assert
