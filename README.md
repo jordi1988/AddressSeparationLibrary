@@ -85,7 +85,7 @@ Manipulations are divided into input and output manipulations. Manipulation clas
 
 #### Input manipulation `IInputManipulation`
 Input manipulation is for editing the *raw input address string* before any processing takes place.  
-It is passed to the `AddressSeparationProcessor<T>` either in constructor or by calling `SetInputManipulation()` for single manipulation functions or `SetInputManipulationQueue()` for multiple manipulation functions.
+It is passed either to the `AddressSeparationProcessor<T>` constructor or set afterwards by `SetInputManipulation()`.
   
 ```csharp
 public class ShortenGermanStreetInputManipulation : IInputManipulation
