@@ -1,4 +1,4 @@
-![Address Separation Logo](/Assets/logo.png)
+![Address Separation Logo](/AddressSeparation/Assets/logo.png)
 
 # Address Separation Library
 ![.NET Standard 2.0](https://github.com/jordi1988/AddressSeparationLibrary/workflows/Address%20Separation%20.NET%20Core%203.1%20Release%20Build%20for%20Ubuntu/badge.svg)
@@ -158,7 +158,7 @@ If you are unsure which output format **fits your needs**, try calling `FindMatc
 
 
 ## Excel add-in
-![Screenshot of Excel add-in](/Assets/ExcelAddInScreenshot.png)  
+![Screenshot of Excel add-in](/AddressSeparation.ExcelAddin/Assets/ExcelAddInScreenshot.png)  
 The Excel add-in always uses the current version of the library. It can be installed using the setup.exe, which can be [downloaded within the ZIP file](../../releases) from the releases tab. You can create your own installer by publishing the `AddressSeparation.ExcelAddIn` project.
 
 
