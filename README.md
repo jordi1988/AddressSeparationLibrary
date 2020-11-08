@@ -1,7 +1,7 @@
 ![Address Separation Logo](/AddressSeparation/Assets/logo.png)
 
 # Address Separation Library
-![.NET Standard 2.0](https://github.com/jordi1988/AddressSeparationLibrary/workflows/Address%20Separation%20.NET%20Core%203.1%20Release%20Build%20for%20Ubuntu/badge.svg)
+![build](https://github.com/jordi1988/AddressSeparationLibrary/workflows/build/badge.svg)
 
 Who doesn't know that? Some guy developed a database table with one column containing the whole address in one string. 
 That database must be renewed. 
