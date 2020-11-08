@@ -47,6 +47,10 @@ namespace AddressSeparation.Models
             this._instance = Activator.CreateInstance(typeof(TOutputFormat)) as TOutputFormat;
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         /// <summary>
         /// Get the instance of the underlying type <see cref="TOutputFormat"/>.
         /// </summary>
@@ -56,6 +60,6 @@ namespace AddressSeparation.Models
             return _instance;
         }
 
-        #endregion Constructors
+        #endregion Methods
     }
 }

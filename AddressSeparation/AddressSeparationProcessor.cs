@@ -1,4 +1,5 @@
 ﻿using AddressSeparation.Attributes;
+using AddressSeparation.Helper;
 using AddressSeparation.Manipulations;
 using AddressSeparation.Mapper;
 using AddressSeparation.Models;
@@ -125,13 +126,7 @@ namespace AddressSeparation
             rawAddressData = this.ProcessInputManipulationQueue(rawAddressData);
 
             // get all properties w/ RegexGroupAttribute and throw exception if there is none
-            var propertyRegexGroupCollection = outputResult
-                .GetInstance()
-                .GetType()
-                .GetProperties()
-                .Select(prop => new PropertyRegexGroupMapper(prop))
-                .Where(x => x.HasRegexGroupAttribute == true);
-
+            var propertyRegexGroupCollection = OutputFormatHelper.GetRegexGroupProperties(typeof(TOutputFormat));
             if (Options.ThrowIfNoRegexGroupPropertyProvided &&
                 propertyRegexGroupCollection.Any() == false)
             {

@@ -12,7 +12,7 @@ namespace AddressSeparation.Mapper
     /// Class for mapping the property and the <see cref="RegexGroupAttribute"/>'s
     /// </summary>
     [DebuggerDisplay("{Property.Name}: {RegexGroupIndex} [{HasRegexGroupAttribute}]")]
-    internal class PropertyRegexGroupMapper
+    public class PropertyRegexGroupMapper
     {
         #region Properties
 

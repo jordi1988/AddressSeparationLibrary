@@ -6,7 +6,7 @@ namespace AddressSeparation.Mapper
     /// <summary>
     /// Class for mapping the group index and manipulation function out of a <see cref="RegexGroupAttribute"/>.
     /// </summary>
-    internal class RegexGroupMapper
+    public class RegexGroupMapper
     {
         #region Properties
 

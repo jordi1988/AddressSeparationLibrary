@@ -1,3 +1,5 @@
+![Address Separation Logo](/Assets/logo.png)
+
 # Address Separation Library
 ![.NET Standard 2.0](https://github.com/jordi1988/AddressSeparationLibrary/workflows/Address%20Separation%20.NET%20Core%203.1%20Release%20Build%20for%20Ubuntu/badge.svg)
 
@@ -13,13 +15,14 @@ Now, you should do it better: the address should be separated into atomic values
 
 ## Table of contents
 1. [Features](#Features)
-2. [Usage](#Usage)
+2. [Library usage](#Usage)
    1. [Example](#Example)
    2. [Output formats](#Output-formats)
    3. [Manipulations](#Manipulations)
    4. [Helper](#Helper)
-3. [Coming up next ...](#Coming-up-next)
-4. [Contribution appreciated](#Contribution-appreciated)
+3. [Excel add-in](#excel-add-in)
+4. [Coming up next ...](#Coming-up-next)
+5. [Contribution appreciated](#Contribution-appreciated)
 
 ## Features
 - Separates a string into multiple atomic values
@@ -154,9 +157,14 @@ IEnumerable<OutputFormatMapper> myOutputFormats = OutputFormatHelper.GetOutputFo
 If you are unsure which output format **fits your needs**, try calling `FindMatchingOutputFormats` of `OutputFormatHelper` and get suggestions based on a given input address.
 
 
+## Excel add-in
+![Screenshot of Excel add-in](/Assets/ExcelAddInScreenshot.png)  
+The Excel add-in always uses the current version of the library. It can be installed using the setup.exe, which can be [downloaded within the ZIP file](../../releases) from the releases tab. You can create your own installer by publishing the `AddressSeparation.ExcelAddIn` project.
+
+
 ## Coming up next
 These features may come in the future:
-- Excel Add in
+- Options/ input manipulation functions/ custom output formats for Excel Add in
 - More output formats
 
 ## Contribution appreciated

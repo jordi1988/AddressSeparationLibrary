@@ -1,4 +1,6 @@
-﻿using AddressSeparation.Extensions;
+﻿using AddressSeparation.Attributes;
+using AddressSeparation.Extensions;
+using AddressSeparation.Factories;
 using AddressSeparation.Mapper;
 using AddressSeparation.Options;
 using AddressSeparation.OutputFormats;
@@ -88,14 +90,10 @@ namespace AddressSeparation.Helper
             foreach (var outputFormat in allOutputFormatClasses)
             {
                 // get and create processor instance
-                Type processorType = typeof(AddressSeparationProcessor<>);
-                Type genericProcessorType = processorType
-                    .MakeGenericType(outputFormat.Type);
-                var processorInstance = Activator
-                    .CreateInstance(genericProcessorType, new DontThrowProcessingOptions(), null);
+                var processorInstance = AddressSeparationProcessorFactory.CreateInstance(outputFormat.Type, new DontThrowProcessingOptions(), null);
 
                 // get and invoke method
-                var processMethod = genericProcessorType
+                var processMethod = processorInstance.GetType()
                     .GetMethod("Process", new[] { typeof(string) });
                 var methodResultInstance = processMethod
                     .Invoke(processorInstance, new object[] { rawAddress });
@@ -112,6 +110,20 @@ namespace AddressSeparation.Helper
             }
 
             return matchingOutputFormats;
+        }
+
+        /// <summary>
+        /// Get all properties containing <see cref="RegexGroupAttribute"/>.
+        /// </summary>
+        /// <param name="outputFormatType">Class type containing <see cref="IOutputFormat"/>.</param>
+        /// <returns>List of mapped properties and regex groups</returns>
+        public static IEnumerable<PropertyRegexGroupMapper> GetRegexGroupProperties(Type outputFormatType)
+        {
+            return outputFormatType
+                .GetProperties()
+                .Select(prop => new PropertyRegexGroupMapper(prop))
+                .Where(x => x.HasRegexGroupAttribute == true);
+
         }
 
         /// <summary>
