@@ -144,28 +144,34 @@ public class GermanSimpleOutputFormat : IOutputFormat
 *GermanSimpleOutputFormat.cs (original class edited for brevity)* 
 
 ### Helper
-`OutputFormatHelper` class can find all output formats in this library or in your program. Get a list including display name and description (read from `DisplayNameAttribute` and `DescriptionAttribute`) by calling:
+`OutputFormatHelper` class will find all output formats in this library or in your program. Get a list including display name and description (read from `DisplayNameAttribute` and `DescriptionAttribute`) by calling:
 ```csharp
 // find all pre-defined output formats
-IEnumerable<OutputFormatMapper> libraryOutputFormats = OutputFormatHelper.GetOutputFormats();
+IEnumerable<OutputFormatMapper> libraryOutputFormats = OutputFormatHelper.GetMappings();
 
 // find your own output formats
 var myAssembly = Assembly.GetExecutingAssembly();
-IEnumerable<OutputFormatMapper> myOutputFormats = OutputFormatHelper.GetOutputFormats(myAssembly);
+IEnumerable<OutputFormatMapper> myOutputFormats = OutputFormatHelper.GetMappings(myAssembly);
 ```
+  
+This will also work for `InputManipulationHelper`. 
 
 If you are unsure which output format **fits your needs**, try calling `FindMatchingOutputFormats` of `OutputFormatHelper` and get suggestions based on a given input address.
 
 
 ## Excel add-in
 ![Screenshot of Excel add-in](/AddressSeparation.ExcelAddin/Assets/ExcelAddInScreenshot.png)  
-The Excel add-in always uses the current version of the library. It can be installed using the setup.exe, which can be [downloaded within the ZIP file](../../releases) from the releases tab. You can create your own installer by publishing the `AddressSeparation.ExcelAddIn` project.
+The Excel add-in always uses the current version of the library. It can be installed using the setup.exe, which can be [downloaded within the ZIP file](../../releases) from the releases tab. 
+
+Hint: extract with 7-Zip when downloading. Do not use the Windows integrated Zip-extractor. Setup won't work due to the self-signed certificate if the file is recognized as *downloaded from web*.
+
+You can create your own installer by publishing the `AddressSeparation.ExcelAddIn` project.
 
 
 ## Coming up next
 These features may come in the future:
-- Options/ input manipulation functions/ custom output formats for Excel Add in
 - More output formats
+- I18n
 
 ## Contribution appreciated
 Let's make this library complete by adding all output/address formats of the world! Feel free to contribute!

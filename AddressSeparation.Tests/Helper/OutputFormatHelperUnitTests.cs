@@ -23,10 +23,10 @@ namespace AddressSeparation.UnitTests.Helper
         }
 
         [TestCase]
-        public void HelperMethods_GetOutputFormats_ReturnsAtLeastOneOutputFormat()
+        public void HelperMethods_GetMappings_ReturnsAtLeastOneOutputFormat()
         {
             // arrange & act
-            var result = OutputFormatHelper.GetOutputFormats(_testAssembly);
+            var result = OutputFormatHelper.GetMappings(_testAssembly);
 
             // assert
             Assert.GreaterOrEqual(result.Count(), 4);
@@ -36,7 +36,7 @@ namespace AddressSeparation.UnitTests.Helper
         public void HelperMethods_FindMatchingOutputFormats_ReturnsAtLeastOneOutputFormat()
         {
             // arrange & act
-            var result = OutputFormatHelper.FindMatchingOutputFormats("Teststrasse 123", _testAssembly);
+            var result = OutputFormatHelper.GetCompatibleOutputFormats("Teststrasse 123", _testAssembly);
             var resultTypes = result
                 .Select(mapper => mapper.Type)
                 .ToList();

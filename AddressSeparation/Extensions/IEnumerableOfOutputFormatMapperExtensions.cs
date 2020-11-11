@@ -18,7 +18,7 @@ namespace AddressSeparation.Extensions
         /// </summary>
         /// <param name="outputFormats"></param>
         /// <returns>Filtered IEnumerable without empty RegExes</returns>
-        public static IEnumerable<OutputFormatDescriptionMapper> RemoveNullRegexes(this IEnumerable<OutputFormatDescriptionMapper> outputFormats)
+        public static IEnumerable<DescriptionMapper> RemoveNullRegexes(this IEnumerable<DescriptionMapper> outputFormats)
         {
             // filter only types with non-null RegEx
             outputFormats = outputFormats

@@ -1,13 +1,11 @@
 ﻿using AddressSeparation.Factories;
 using AddressSeparation.Helper;
+using AddressSeparation.Manipulations;
 using AddressSeparation.Mapper;
-using AddressSeparation.Models;
-using AddressSeparation.OutputFormats.de;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,11 +13,20 @@ namespace AddressSeparation.ExcelAddin
 {
     public partial class AddressSeparationRibbon
     {
+        #region Fields
+
         /// <summary>
         /// Dictionary for mapping string value in combobox and type
         /// </summary>
-        private static Dictionary<string, OutputFormatDescriptionMapper> _outputFormatsDictionary = 
-            new Dictionary<string, OutputFormatDescriptionMapper>();
+        private static Dictionary<string, DescriptionMapper> _outputFormatsDictionary =
+            new Dictionary<string, DescriptionMapper>();
+
+        /// <summary>
+        /// Access to the options dialog
+        /// </summary>
+        private AdvancedSettingsDialog _optionsDialog = new AdvancedSettingsDialog();
+
+        #endregion Fields
 
         #region Methods
 
@@ -28,7 +35,7 @@ namespace AddressSeparation.ExcelAddin
         /// </summary>
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            var outputFormats = OutputFormatHelper.GetOutputFormats();
+            var outputFormats = OutputFormatHelper.GetMappings();
             this.PopulateOutputFormats(outputFormats);
         }
 
@@ -55,8 +62,9 @@ namespace AddressSeparation.ExcelAddin
             }
 
             // create processor
-            dynamic processor = AddressSeparationProcessorFactory.CreateInstance(selectedOutputFormatType, null, null);
-            var matchedProperties = OutputFormatHelper.GetRegexGroupProperties(selectedOutputFormatType).ToList();
+            var queue = GetInputManipulationQueue();
+            dynamic processor = AddressSeparationProcessorFactory.CreateInstance(selectedOutputFormatType, null, queue);
+            var matchedProperties = OutputFormatHelper.GetPropertyRegexGroups(selectedOutputFormatType).ToList();
 
             // try resolving every address
             foreach (Range cell in selection.Cells)
@@ -82,10 +90,26 @@ namespace AddressSeparation.ExcelAddin
         }
 
         /// <summary>
+        /// Generate queue with selected input manipulation functions
+        /// </summary>
+        /// <returns>ready-to-use queue</returns>
+        private Queue<IInputManipulation> GetInputManipulationQueue()
+        {
+            var queue = new Queue<IInputManipulation>();
+            var activeInputManipulations = _optionsDialog.GetActiveInputManipulationOptions();
+            foreach (var item in activeInputManipulations)
+            {
+                var instance = Activator.CreateInstance(item.Type) as IInputManipulation;
+                queue.Enqueue(instance);
+            }
+            return queue;
+        }
+
+        /// <summary>
         /// Populate dropdown containing output formats of the Address Separation library.
         /// </summary>
         /// <param name="outputFormats">List of output formats to populate the combo box with.</param>
-        private void PopulateOutputFormats(IEnumerable<OutputFormatDescriptionMapper> outputFormats)
+        private void PopulateOutputFormats(IEnumerable<DescriptionMapper> outputFormats)
         {
             // clear all items and repopulate combobox and dictionary
             cbOutputFormat.Items.Clear();
@@ -103,7 +127,7 @@ namespace AddressSeparation.ExcelAddin
                 cbOutputFormat.Items.Add(item);
                 _outputFormatsDictionary.Add(format.DisplayName, format);
             }
-            
+
             // select first item if it exists
             cbOutputFormat.Text = cbOutputFormat.Items.FirstOrDefault()?.Label;
         }
@@ -123,11 +147,11 @@ namespace AddressSeparation.ExcelAddin
                 return;
             }
 
-            IEnumerable<OutputFormatDescriptionMapper> outputFormats = null;
+            IEnumerable<DescriptionMapper> outputFormats = null;
             if (button.Checked == false)
             {
                 // show all output formats
-                outputFormats = OutputFormatHelper.GetOutputFormats();
+                outputFormats = OutputFormatHelper.GetMappings();
             }
             else
             {
@@ -140,7 +164,7 @@ namespace AddressSeparation.ExcelAddin
                     return;
                 }
 
-                outputFormats = OutputFormatHelper.FindMatchingOutputFormats(firstSelectedCellValue);
+                outputFormats = OutputFormatHelper.GetCompatibleOutputFormats(firstSelectedCellValue);
             }
 
             // repopulate dropdown
@@ -152,29 +176,41 @@ namespace AddressSeparation.ExcelAddin
         /// </summary>
         private void AddressSeparationGroup_DialogLauncherClick(object sender, RibbonControlEventArgs e)
         {
-            var folderBrowserDialog = new FolderBrowserDialog()
-            {
-                Description = "Select a folder containing an assembly with custom output formats."
-            };
-
-            // sanity check dialog
-            var result = folderBrowserDialog.ShowDialog();
-            if (result == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            // sanity check directory
-            var directory = new DirectoryInfo(folderBrowserDialog.SelectedPath);
-            if (directory.Exists == false)
-            {
-                return;
-            }
-
-            throw new NotImplementedException();
+            _optionsDialog.ShowDialog();
         }
 
         #endregion Methods
 
+        //private void button1_Click(object sender, RibbonControlEventArgs e)
+        //{
+        //    var folderBrowserDialog = new FolderBrowserDialog()
+        //    {
+        //        Description = "Select a folder containing an assembly with custom output formats."
+        //    };
+
+        //    // sanity check dialog
+        //    var result = folderBrowserDialog.ShowDialog();
+        //    if (result == DialogResult.Cancel)
+        //    {
+        //        return;
+        //    }
+
+        //    // sanity check directory
+        //    var directory = new DirectoryInfo(folderBrowserDialog.SelectedPath);
+        //    if (directory.Exists == false)
+        //    {
+        //        return;
+        //    }
+
+        //    foreach (var file in directory.GetFiles("*.dll"))
+        //    {
+        //        var userAssembly = Assembly.LoadFrom(file.FullName);
+        //        // userAssembly = Assembly.Load(userAssembly.FullName);
+        //        var outputFormats = OutputFormatHelper.GetMappings(userAssembly);
+        //        this.PopulateOutputFormats(outputFormats);
+        //    }
+
+        //    // throw new NotImplementedException();
+        //}
     }
 }

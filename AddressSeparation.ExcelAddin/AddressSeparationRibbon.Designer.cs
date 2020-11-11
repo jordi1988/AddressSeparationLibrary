@@ -41,8 +41,6 @@
             this.cbOutputFormat = this.Factory.CreateRibbonComboBox();
             this.btnProcess = this.Factory.CreateRibbonButton();
             this.toggleFindMatch = this.Factory.CreateRibbonToggleButton();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
-            this.box1 = this.Factory.CreateRibbonBox();
             this.tab1.SuspendLayout();
             this.AddressSeparationGroup.SuspendLayout();
             this.SuspendLayout();
@@ -56,16 +54,13 @@
             // 
             // AddressSeparationGroup
             // 
-            ribbonDialogLauncherImpl1.ScreenTip = "Load custom output formats";
-            ribbonDialogLauncherImpl1.SuperTip = "Select a folder containing an assembly with custom output formats.";
-            ribbonDialogLauncherImpl1.Visible = false;
+            ribbonDialogLauncherImpl1.ScreenTip = "Options";
+            ribbonDialogLauncherImpl1.SuperTip = "Options for customizing the processor";
             this.AddressSeparationGroup.DialogLauncher = ribbonDialogLauncherImpl1;
             this.AddressSeparationGroup.Items.Add(this.btnProcess);
             this.AddressSeparationGroup.Items.Add(this.separator1);
             this.AddressSeparationGroup.Items.Add(this.toggleFindMatch);
             this.AddressSeparationGroup.Items.Add(this.cbOutputFormat);
-            this.AddressSeparationGroup.Items.Add(this.separator2);
-            this.AddressSeparationGroup.Items.Add(this.box1);
             this.AddressSeparationGroup.Label = "Address Separation";
             this.AddressSeparationGroup.Name = "AddressSeparationGroup";
             this.AddressSeparationGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddressSeparationGroup_DialogLauncherClick);
@@ -80,6 +75,7 @@
             this.cbOutputFormat.Name = "cbOutputFormat";
             this.cbOutputFormat.OfficeImageId = "CalloutOptions";
             this.cbOutputFormat.ScreenTip = "Output Format";
+            this.cbOutputFormat.ShowImage = true;
             this.cbOutputFormat.ShowItemImage = false;
             this.cbOutputFormat.ShowLabel = false;
             this.cbOutputFormat.SizeString = "123456789012345678901234567890";
@@ -108,14 +104,6 @@
     "the list of matching output formats.";
             this.toggleFindMatch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleFindMatch_Click);
             // 
-            // separator2
-            // 
-            this.separator2.Name = "separator2";
-            // 
-            // box1
-            // 
-            this.box1.Name = "box1";
-            // 
             // AddressSeparationRibbon
             // 
             this.Name = "AddressSeparationRibbon";
@@ -138,8 +126,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cbOutputFormat;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleFindMatch;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonBox box1;
     }
 
     partial class ThisRibbonCollection

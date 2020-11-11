@@ -126,7 +126,7 @@ namespace AddressSeparation
             rawAddressData = this.ProcessInputManipulationQueue(rawAddressData);
 
             // get all properties w/ RegexGroupAttribute and throw exception if there is none
-            var propertyRegexGroupCollection = OutputFormatHelper.GetRegexGroupProperties(typeof(TOutputFormat));
+            var propertyRegexGroupCollection = OutputFormatHelper.GetPropertyRegexGroups(typeof(TOutputFormat));
             if (Options.ThrowIfNoRegexGroupPropertyProvided &&
                 propertyRegexGroupCollection.Any() == false)
             {

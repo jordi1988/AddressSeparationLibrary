@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AddressSeparation.Manipulations;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
-namespace AddressSeparation.Manipulations.Input
+namespace AddressSeparation.UnitTests.Data.Manipulations
 {
     /// <summary>
     /// Input manipulation class for trimming the beginning and end of the input.

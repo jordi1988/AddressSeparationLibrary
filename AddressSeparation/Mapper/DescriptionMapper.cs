@@ -5,7 +5,7 @@ namespace AddressSeparation.Mapper
     /// <summary>
     /// Describes an output format.
     /// </summary>
-    public class OutputFormatDescriptionMapper
+    public class DescriptionMapper
     {
         #region Properties
 
