@@ -23,7 +23,7 @@ namespace AddressSeparation.OutputFormats.de
         /// <para>else: everything is the street name</para>
         /// </remarks>
         public Regex MatchingRegex => new Regex(
-            @"^(?(?=.*\d)((\D+))\s?(\d+)\s*(\D){0,2}|(.*))$",
+            @"^(?(?=.*\d)((\D+))\s?(\d+)\s*([a-zA-Z]{0,2})[\D\d]*|(.*))$",
             RegexOptions.IgnoreCase
         );
 

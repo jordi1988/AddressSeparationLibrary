@@ -29,7 +29,7 @@ Now, you should do it better: the address should be separated into atomic values
 - Easy to extend with more output formats and user-defined manipulation functions
 - No external dependencies
 - Currently supported output formats
-  - **[German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)**: Matches simple German addresses in format `Streetname 123a`
+  - **[German, simple](/AddressSeparation/OutputFormats/de/GermanSimpleOutputFormat.cs)**: Matches simple German addresses in format `Streetname 123a` (including wrong spellings)
   
 ## Usage
 1. Simply grab this library from [NuGet](https://www.nuget.org/packages/AddressSeparation/) or download the binary from [GitHub](../../releases) and add it as a reference to your project.
@@ -170,6 +170,7 @@ You can create your own installer by publishing the `AddressSeparation.ExcelAddI
 
 ## Coming up next
 These features may come in the future:
+- .NET Standard 2.1
 - More output formats
 - I18n
 

@@ -37,10 +37,10 @@
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.AddressSeparationGroup = this.Factory.CreateRibbonGroup();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.cbOutputFormat = this.Factory.CreateRibbonComboBox();
             this.btnProcess = this.Factory.CreateRibbonButton();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.toggleFindMatch = this.Factory.CreateRibbonToggleButton();
+            this.cbOutputFormat = this.Factory.CreateRibbonComboBox();
             this.tab1.SuspendLayout();
             this.AddressSeparationGroup.SuspendLayout();
             this.SuspendLayout();
@@ -65,22 +65,6 @@
             this.AddressSeparationGroup.Name = "AddressSeparationGroup";
             this.AddressSeparationGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddressSeparationGroup_DialogLauncherClick);
             // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
-            // 
-            // cbOutputFormat
-            // 
-            this.cbOutputFormat.Label = "Output Format";
-            this.cbOutputFormat.Name = "cbOutputFormat";
-            this.cbOutputFormat.OfficeImageId = "CalloutOptions";
-            this.cbOutputFormat.ScreenTip = "Output Format";
-            this.cbOutputFormat.ShowImage = true;
-            this.cbOutputFormat.ShowItemImage = false;
-            this.cbOutputFormat.ShowLabel = false;
-            this.cbOutputFormat.SizeString = "123456789012345678901234567890";
-            this.cbOutputFormat.Text = null;
-            // 
             // btnProcess
             // 
             this.btnProcess.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -93,6 +77,10 @@
     "en right next to the active cell.";
             this.btnProcess.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnProcess_Click);
             // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
             // toggleFindMatch
             // 
             this.toggleFindMatch.Label = "Identify output formats";
@@ -103,6 +91,18 @@
             this.toggleFindMatch.SuperTip = "Place your active cell onto an address and activate this button for repopulating " +
     "the list of matching output formats.";
             this.toggleFindMatch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleFindMatch_Click);
+            // 
+            // cbOutputFormat
+            // 
+            this.cbOutputFormat.Label = "Output Format";
+            this.cbOutputFormat.Name = "cbOutputFormat";
+            this.cbOutputFormat.OfficeImageId = "CalloutOptions";
+            this.cbOutputFormat.ScreenTip = "Output Format";
+            this.cbOutputFormat.ShowImage = true;
+            this.cbOutputFormat.ShowItemImage = false;
+            this.cbOutputFormat.ShowLabel = false;
+            this.cbOutputFormat.SizeString = "123456789012345678901234567890";
+            this.cbOutputFormat.Text = null;
             // 
             // AddressSeparationRibbon
             // 
