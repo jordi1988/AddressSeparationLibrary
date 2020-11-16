@@ -45,6 +45,10 @@ namespace AddressSeparation.UnitTests.OutputFormats
             new object[] { "Testmannstraße 11 - 13", "Testmannstraße", (short)11, "" },
             new object[] { "Berliner Strasse 11- 13", "Berliner Strasse", (short)11, "" },
             new object[] { "Berliner-Strasse 11 -13", "Berliner-Strasse", (short)11, "" },
+            new object[] { "Testmannstr. 11-13a", "Testmannstr.", (short)11, "A" },
+            new object[] { "Testmannstraße 11 - 13 A", "Testmannstraße", (short)11, "A" },
+            new object[] { "Berliner Strasse 11- 13a", "Berliner Strasse", (short)11, "A" },
+            new object[] { "Berliner-Strasse 11 -13 A", "Berliner-Strasse", (short)11, "A" },
 
             // Faulty affix
             new object[] { "Testmannstr. 11 (gegenüber Musterstr.)", "Testmannstr.", (short)11, "" },

@@ -188,6 +188,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="AddressSeparationRibbon.de.resx">
+      <DependentUpon>AddressSeparationRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdvancedSettingsDialog.de.resx">
+      <DependentUpon>AdvancedSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdvancedSettingsDialog.resx">
       <DependentUpon>AdvancedSettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,6 +208,12 @@
     </Compile>
     <EmbeddedResource Include="AddressSeparationRibbon.resx">
       <DependentUpon>AddressSeparationRibbon.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.de.resx" />
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="AddressSeparation.ExcelAddin_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -217,6 +229,11 @@
     </Compile>
     <Compile Include="AddressSeparationRibbon.Designer.cs">
       <DependentUpon>AddressSeparationRibbon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>

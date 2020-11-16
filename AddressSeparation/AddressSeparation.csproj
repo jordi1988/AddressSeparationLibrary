@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>AddressSeparation</PackageId>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Authors>jordi1988</Authors>
     <Title>Address Separation Library</Title>
     <Description>Address Separation Library is an extensible library written in C# for isolating/ dividing/ cutting/ breaking up an address into its parts. This is done by an Regex putting the matching groups into class properties. With the help of user-defined input and output manipulation functions it can be made even more powerful when processing an address.</Description>
@@ -11,8 +11,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/jordi1988/AddressSeparationLibrary</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jordi1988/AddressSeparationLibrary</RepositoryUrl>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

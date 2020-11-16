@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedSettingsDialog));
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.gridInputManipulations = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colActivate = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridInputManipulations)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,9 +45,7 @@
             this.gridInputManipulations.AllowUserToDeleteRows = false;
             this.gridInputManipulations.AllowUserToResizeColumns = false;
             this.gridInputManipulations.AllowUserToResizeRows = false;
-            this.gridInputManipulations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.gridInputManipulations, "gridInputManipulations");
             this.gridInputManipulations.BackgroundColor = System.Drawing.SystemColors.Control;
             this.gridInputManipulations.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridInputManipulations.CausesValidation = false;
@@ -59,69 +58,54 @@
             this.colActivate});
             this.gridInputManipulations.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gridInputManipulations.GridColor = System.Drawing.SystemColors.Control;
-            this.gridInputManipulations.Location = new System.Drawing.Point(2, 1);
             this.gridInputManipulations.MultiSelect = false;
             this.gridInputManipulations.Name = "gridInputManipulations";
             this.gridInputManipulations.RowHeadersVisible = false;
             this.gridInputManipulations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridInputManipulations.Size = new System.Drawing.Size(668, 167);
-            this.gridInputManipulations.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 174);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(310, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Selected options will stay active until this dialog is opened again.";
             // 
             // colName
             // 
             this.colName.DataPropertyName = "DisplayName";
-            this.colName.HeaderText = "Name";
+            resources.ApplyResources(this.colName, "colName");
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
-            this.colName.Width = 200;
             // 
             // colDescription
             // 
             this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colDescription.DataPropertyName = "Description";
-            this.colDescription.HeaderText = "Description";
-            this.colDescription.MinimumWidth = 200;
+            resources.ApplyResources(this.colDescription, "colDescription");
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
             // 
             // colType
             // 
             this.colType.DataPropertyName = "Type";
-            this.colType.HeaderText = "Type";
+            resources.ApplyResources(this.colType, "colType");
             this.colType.Name = "colType";
             this.colType.ReadOnly = true;
             this.colType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colType.Visible = false;
-            this.colType.Width = 5;
             // 
             // colActivate
             // 
-            this.colActivate.HeaderText = "Activate";
+            resources.ApplyResources(this.colActivate, "colActivate");
             this.colActivate.Name = "colActivate";
-            this.colActivate.Width = 75;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
             // AdvancedSettingsDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 193);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.gridInputManipulations);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "AdvancedSettingsDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Input manipulations";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.gridInputManipulations)).EndInit();
             this.ResumeLayout(false);

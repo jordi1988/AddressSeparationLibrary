@@ -13,6 +13,9 @@ namespace AddressSeparation.Options
         /// <inheritdoc cref="IProcessingOptions.ThrowIfNoRegexGroupPropertyProvided"/>
         public bool ThrowIfNoRegexGroupPropertyProvided { get; set; } = false;
 
+        /// <inheritdoc cref="IProcessingOptions.RefillInputmanipulationsQueue"/>
+        public bool RefillInputmanipulationsQueue { get; set; } = true;
+
         #endregion Properties
     }
 }

@@ -33,6 +33,12 @@ namespace AddressSeparation
 
         #endregion Properties
 
+        #region Fields
+
+        private Queue<IInputManipulation> _inputManipulationQueueState;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -295,11 +301,29 @@ namespace AddressSeparation
         /// <returns>Manipulated address</returns>
         private string ProcessInputManipulationQueue(string rawAddress)
         {
+            // sanity check
+            if (InputManipulationQueue == null)
+            {
+                return rawAddress;
+            }
+
+            // fill queue's state
+            if (Options.RefillInputmanipulationsQueue)
+            {
+                _inputManipulationQueueState = new Queue<IInputManipulation>(InputManipulationQueue);
+            }
+
             // complete every function in queue
-            while (InputManipulationQueue != null && InputManipulationQueue.Count > 0)
+            while (InputManipulationQueue.Count > 0)
             {
                 var func = InputManipulationQueue.Dequeue();
                 rawAddress = func.Invoke(rawAddress);
+            }
+
+            // refill queue
+            if (Options.RefillInputmanipulationsQueue)
+            {
+                InputManipulationQueue = _inputManipulationQueueState;
             }
 
             return rawAddress;

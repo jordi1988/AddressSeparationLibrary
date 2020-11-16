@@ -10,6 +10,9 @@
         /// <inheritdoc cref="IProcessingOptions.ThrowIfNoRegexGroupPropertyProvided"/>
         public bool ThrowIfNoRegexGroupPropertyProvided { get; set; } = true;
 
+        /// <inheritdoc cref="IProcessingOptions.RefillInputmanipulationsQueue"/>
+        public bool RefillInputmanipulationsQueue { get; set; } = true;
+
         #endregion Properties
     }
 }

@@ -16,6 +16,11 @@ namespace AddressSeparation.Options
         /// </summary>
         bool ThrowIfNoRegexGroupPropertyProvided { get; set; }
 
+        /// <summary>
+        /// Refill input manipulation queue for the next address when queue was fully processed.
+        /// </summary>
+        bool RefillInputmanipulationsQueue { get; set; }
+
         #endregion Properties
     }
 }

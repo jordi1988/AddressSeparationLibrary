@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace AddressSeparation.OutputFormats.de
 {
     /// <summary>
-    /// Matches simple german addresses without a zone in the format "Streetname 123a"
+    /// Matches simple German addresses without a zone in the format "Streetname 123a"
     /// </summary>
     [DisplayName("German, simple")]
     [Description("Matches german addresses in format `Streetname 123a`")]
@@ -23,7 +23,7 @@ namespace AddressSeparation.OutputFormats.de
         /// <para>else: everything is the street name</para>
         /// </remarks>
         public Regex MatchingRegex => new Regex(
-            @"^(?(?=.*\d)((\D+))\s?(\d+)\s*([a-zA-Z]{0,2})[\D\d]*|(.*))$",
+            @"^(?(?=.*\d)((\D+))\s?(\d+)[\s\-\d]*([a-zA-Z]{0,2})[\D\d]*|(.*))$",
             RegexOptions.IgnoreCase
         );
 

@@ -13,26 +13,6 @@ namespace AddressSeparation.UnitTests
         #region Methods
 
         [TestCase]
-        public void NoRegexSetUp_ThrowsArgumentNullException()
-        {
-            // arrange
-            var processor = new AddressSeparationProcessor<NoRegexOutputFormat>();
-
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() => processor.Process("Teststreet 123"));
-        }
-
-        [TestCase]
-        public void NoRegexGroupAttributesSetUp_ThrowsMissingMemberException()
-        {
-            // arrange
-            var processor = new AddressSeparationProcessor<NoRegexGroupAttributeOutputFormat>();
-
-            // act & assert
-            Assert.Throws<MissingMemberException>(() => processor.Process("Teststreet 123"));
-        }
-
-        [TestCase]
         public void EmptyInput_IsSameAsOutputRegex_ReturnsNotResolvedOutputResult()
         {
             // arrange

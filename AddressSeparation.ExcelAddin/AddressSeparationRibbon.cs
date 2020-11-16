@@ -48,7 +48,9 @@ namespace AddressSeparation.ExcelAddin
             var selection = Globals.ThisAddIn.Application.Selection as Range;
             if (selection == null)
             {
-                MessageBox.Show("Place your cursor onto an address.", "Process", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                MessageBox.Show(Resources.Messages.PlaceCursorOntoAddress, Resources.Messages.ProcessTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -57,7 +59,8 @@ namespace AddressSeparation.ExcelAddin
             Type selectedOutputFormatType = _outputFormatsDictionary[selectedOutputFormatText]?.Type;
             if (selectedOutputFormatType == null)
             {
-                MessageBox.Show("Select an output format.", "Process", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.Messages.SelectOutputFormat, Resources.Messages.ProcessTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -160,7 +163,9 @@ namespace AddressSeparation.ExcelAddin
                 if (string.IsNullOrWhiteSpace(firstSelectedCellValue))
                 {
                     button.Checked = false;
-                    MessageBox.Show("Place your cursor onto an address.", "Identify output formats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        Resources.Messages.PlaceCursorOntoAddress, Resources.Messages.IdentifyOutputFormats, 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 

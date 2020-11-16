@@ -35,6 +35,7 @@
         private void InitializeComponent()
         {
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddressSeparationRibbon));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.AddressSeparationGroup = this.Factory.CreateRibbonGroup();
             this.btnProcess = this.Factory.CreateRibbonButton();
@@ -49,32 +50,28 @@
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.AddressSeparationGroup);
-            this.tab1.Label = "TabAddIns";
+            resources.ApplyResources(this.tab1, "tab1");
             this.tab1.Name = "tab1";
             // 
             // AddressSeparationGroup
             // 
-            ribbonDialogLauncherImpl1.ScreenTip = "Options";
-            ribbonDialogLauncherImpl1.SuperTip = "Options for customizing the processor";
+            resources.ApplyResources(ribbonDialogLauncherImpl1, "ribbonDialogLauncherImpl1");
             this.AddressSeparationGroup.DialogLauncher = ribbonDialogLauncherImpl1;
             this.AddressSeparationGroup.Items.Add(this.btnProcess);
             this.AddressSeparationGroup.Items.Add(this.separator1);
             this.AddressSeparationGroup.Items.Add(this.toggleFindMatch);
             this.AddressSeparationGroup.Items.Add(this.cbOutputFormat);
-            this.AddressSeparationGroup.Label = "Address Separation";
+            resources.ApplyResources(this.AddressSeparationGroup, "AddressSeparationGroup");
             this.AddressSeparationGroup.Name = "AddressSeparationGroup";
             this.AddressSeparationGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddressSeparationGroup_DialogLauncherClick);
             // 
             // btnProcess
             // 
             this.btnProcess.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnProcess.Label = "Process";
+            resources.ApplyResources(this.btnProcess, "btnProcess");
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.OfficeImageId = "ConvertTextToTable";
-            this.btnProcess.ScreenTip = "Process your address";
             this.btnProcess.ShowImage = true;
-            this.btnProcess.SuperTip = "Select cells containing your addresses and process them. The output will be writt" +
-    "en right next to the active cell.";
             this.btnProcess.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnProcess_Click);
             // 
             // separator1
@@ -83,26 +80,20 @@
             // 
             // toggleFindMatch
             // 
-            this.toggleFindMatch.Label = "Identify output formats";
+            resources.ApplyResources(this.toggleFindMatch, "toggleFindMatch");
             this.toggleFindMatch.Name = "toggleFindMatch";
             this.toggleFindMatch.OfficeImageId = "FindDialog";
-            this.toggleFindMatch.ScreenTip = "Find formats matching your address";
             this.toggleFindMatch.ShowImage = true;
-            this.toggleFindMatch.SuperTip = "Place your active cell onto an address and activate this button for repopulating " +
-    "the list of matching output formats.";
             this.toggleFindMatch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleFindMatch_Click);
             // 
             // cbOutputFormat
             // 
-            this.cbOutputFormat.Label = "Output Format";
+            resources.ApplyResources(this.cbOutputFormat, "cbOutputFormat");
             this.cbOutputFormat.Name = "cbOutputFormat";
             this.cbOutputFormat.OfficeImageId = "CalloutOptions";
-            this.cbOutputFormat.ScreenTip = "Output Format";
             this.cbOutputFormat.ShowImage = true;
             this.cbOutputFormat.ShowItemImage = false;
             this.cbOutputFormat.ShowLabel = false;
-            this.cbOutputFormat.SizeString = "123456789012345678901234567890";
-            this.cbOutputFormat.Text = null;
             // 
             // AddressSeparationRibbon
             // 

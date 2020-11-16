@@ -118,133 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ribbonDialogLauncherImpl1.ScreenTip" xml:space="preserve">
-    <value>Input manipulations</value>
+    <value>Eingabemanipulationen</value>
   </data>
   <data name="ribbonDialogLauncherImpl1.SuperTip" xml:space="preserve">
-    <value>Options for customizing the processor</value>
+    <value>Optionen zur Anpassung der Verarbeitung</value>
   </data>
   <data name="btnProcess.Label" xml:space="preserve">
-    <value>Process address</value>
+    <value>Adresse verarbeiten</value>
   </data>
   <data name="btnProcess.ScreenTip" xml:space="preserve">
-    <value>Process your address</value>
+    <value>Adresse verarbeiten</value>
   </data>
   <data name="btnProcess.SuperTip" xml:space="preserve">
-    <value>Select cells containing your addresses and process them. The output will be written right next to the active cell.</value>
-  </data>
-  <data name="&gt;&gt;btnProcess.Name" xml:space="preserve">
-    <value>btnProcess</value>
-  </data>
-  <data name="&gt;&gt;btnProcess.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.ButtonView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;btnProcess.Parent" xml:space="preserve">
-    <value>AddressSeparationGroup</value>
-  </data>
-  <data name="&gt;&gt;btnProcess.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;separator1.Name" xml:space="preserve">
-    <value>separator1</value>
-  </data>
-  <data name="&gt;&gt;separator1.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.SeparatorView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;separator1.Parent" xml:space="preserve">
-    <value>AddressSeparationGroup</value>
-  </data>
-  <data name="&gt;&gt;separator1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>Zellen mit Ihrer Adresse auswählen und verarbeiten. Das Ergebnis wird rechts von der aktiven Zelle geschrieben.</value>
   </data>
   <data name="toggleFindMatch.Label" xml:space="preserve">
-    <value>Identify output formats</value>
+    <value>Ausgabeformate erkennen</value>
   </data>
   <data name="toggleFindMatch.ScreenTip" xml:space="preserve">
-    <value>Find formats matching your address</value>
+    <value>Finden Sie Formate, die zu Ihrer Adresse passen</value>
   </data>
   <data name="toggleFindMatch.SuperTip" xml:space="preserve">
-    <value>Place your active cell onto an address and activate this button for repopulating the list of matching output formats.</value>
-  </data>
-  <data name="&gt;&gt;toggleFindMatch.Name" xml:space="preserve">
-    <value>toggleFindMatch</value>
-  </data>
-  <data name="&gt;&gt;toggleFindMatch.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.ToggleButtonView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;toggleFindMatch.Parent" xml:space="preserve">
-    <value>AddressSeparationGroup</value>
-  </data>
-  <data name="&gt;&gt;toggleFindMatch.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>Setzen Sie die aktive Zelle auf eine Adresse und aktivieren Sie diesen Knopf, um die Liste mit passenden Ausgabeformaten zu befüllen.</value>
   </data>
   <data name="cbOutputFormat.Label" xml:space="preserve">
-    <value>Output Format</value>
+    <value>Ausgabeformate</value>
   </data>
   <data name="cbOutputFormat.ScreenTip" xml:space="preserve">
-    <value>Output Format</value>
-  </data>
-  <data name="cbOutputFormat.SizeString" xml:space="preserve">
-    <value>123456789012345678901234567890</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cbOutputFormat.Text" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="&gt;&gt;cbOutputFormat.Name" xml:space="preserve">
-    <value>cbOutputFormat</value>
-  </data>
-  <data name="&gt;&gt;cbOutputFormat.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.ComboBoxView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;cbOutputFormat.Parent" xml:space="preserve">
-    <value>AddressSeparationGroup</value>
-  </data>
-  <data name="&gt;&gt;cbOutputFormat.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="AddressSeparationGroup.Label" xml:space="preserve">
-    <value>Address Separation</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationGroup.Name" xml:space="preserve">
-    <value>AddressSeparationGroup</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationGroup.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.GroupView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationGroup.Parent" xml:space="preserve">
-    <value>tab1</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationGroup.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tab1.Label" xml:space="preserve">
-    <value>TabAddIns</value>
-  </data>
-  <data name="&gt;&gt;tab1.Name" xml:space="preserve">
-    <value>tab1</value>
-  </data>
-  <data name="&gt;&gt;tab1.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.TabView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="&gt;&gt;AddressSeparationRibbon.OfficeMenu.Name" xml:space="preserve">
-    <value>AddressSeparationRibbon.OfficeMenu</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationRibbon.OfficeMenu.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.OfficeMenuView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationRibbon.OfficeMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;AddressSeparationRibbon.OfficeMenu.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>AddressSeparationRibbon</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.Tools.Office.Ribbon.View.GenericRibbonView, Microsoft.VisualStudio.Tools.Office.Designer, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Ausgabeformate</value>
   </data>
 </root>
